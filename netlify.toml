@@ -1,0 +1,26 @@
+# Netlify publishes every file under `publish`, so the publish directory is a
+# dist/ holding nothing but the gate. Pointing Netlify at the repo root would
+# serve /lp-briefing.html — the unencrypted briefing — straight past the
+# passphrase, and /build.js alongside it.
+#
+# The build re-encrypts on every deploy, so the published gate can never drift
+# behind lp-briefing.html the way a committed index.html can. BRIEFING_PASSPHRASE
+# is set in the Netlify UI (Site configuration -> Environment variables); it is
+# deliberately absent from this repo. If it is unset the build fails loudly
+# rather than publishing something unencrypted.
+
+[build]
+  command = "node build.js \"$BRIEFING_PASSPHRASE\" && mkdir -p dist && cp index.html dist/"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[headers]]
+  for = "/*"
+
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    Referrer-Policy = "no-referrer"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"

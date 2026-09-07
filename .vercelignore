@@ -1,0 +1,12 @@
+# Vercel uploads everything not listed here and serves it at the repo root.
+# Without this file /lp-briefing.html returns the unencrypted briefing straight
+# past the passphrase gate, and /build.js is served beside it. Only the gate
+# ships.
+#
+# This is the .vercelignore counterpart to netlify.toml, which solves the same
+# problem by publishing a dist/ holding nothing but index.html.
+lp-briefing.html
+build.js
+netlify.toml
+README.md
+.gitignore

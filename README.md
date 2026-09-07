@@ -1,33 +1,60 @@
 # Synopsis
 
-Investor-facing summaries of Exascale, written for readers who are not
-close to the technology.
+The simplified Exascale deck — the investor memorandum rewritten for limited
+partners who are not close to the technology. Same app as the full deck: a
+1280×720 stage scaled to fit, scroll-snapped slides, a progress rail, prev/next,
+a slide map, and a passphrase gate.
 
-## Contents
+**Confidential.** This carries the P&L, the valuation grid and the return
+multiples. Do not forward the plaintext.
+
+## Files
 
 | File | What it is |
 | --- | --- |
-| `lp-briefing.html` | A simplified briefing for limited partners, supporting a $5m raise. Plain English, no jargon beyond five defined terms, every external figure cited. |
+| `lp-briefing.html` | The briefing itself, 14 slides. The plaintext source. |
+| `build.js` | Wraps it in the passphrase gate and writes `index.html`. |
+| `index.html` | The gate. The only file that should ever be served. |
 
-## How the LP briefing is sourced
+## Building
 
-Every externally checkable claim carries a numbered chip linking to a source
-register at the end of the document, following the same convention as
-`lib/sources.ts` in the `exascale` repository: publisher, title, date, link,
-and the sentence the claim rests on. Sources are graded `PRIMARY` (the party
-that owns the number), `REPORTING` (a named outlet) or `ANALYSIS` (a third
-party's own estimate).
+```bash
+node build.js "compute"                      # one shared passphrase
+node build.js --to "Taurus Capital" "pass"   # named recipient, watermarked
+```
 
-Figures that are *not* cited are Exascale's own assumptions — the fee
-schedule, the ownership and dilution assumptions, and the illustrative
-volumes and revenue multiples in sections 06 and 08. Those are labelled as
-assumptions where they appear.
+The briefing is encrypted with AES-256-GCM under a random content key, which is
+then wrapped per recipient under a key derived from their passphrase by PBKDF2-
+SHA256 at 310,000 iterations. The plaintext is never in `index.html` — "view
+source" on the gate yields ciphertext, so it is not a JavaScript check that can
+be clicked past. A `--to` build tiles the recipient's name across every slide, so
+a leaked screenshot names its source; an unlabelled build carries no watermark.
+
+Rebuild whenever `lp-briefing.html` changes — the gate holds a snapshot, not a
+reference. `.vercelignore` and `netlify.toml` both exist to stop the plaintext
+being served past the gate; keep them in step with any file you add.
+
+## How this differs from `taihungau/deck`
+
+Same machinery, three deliberate departures:
+
+- **Type.** The full deck embeds Suisse Intl and KH Interference, which are
+  trial licences whose terms prohibit public use. This sets Spectral, Source
+  Sans 3 and IBM Plex Mono from Google Fonts instead — open-licensed, same
+  editorial register.
+- **Palette.** Charts use `#19AD90` against an ochre second hue rather than the
+  brand jade `#0A9078`, which reads grey at chart size and sits below the
+  normal-vision separation floor against the site's steel blue. The substitute
+  clears all six colour checks on this ground.
+- **Audience.** Written for a reader who does not know what a GPU is. Jargon is
+  defined once on slide 03 and then avoided; every externally checkable figure
+  carries a numbered source, and every figure that is Exascale's own assertion
+  is marked `OURS` so a reader can tell the two apart at a glance.
 
 ## What this document deliberately does not do
 
-It states no promised return multiple. Section 08 instead runs the arithmetic
-in reverse, showing what would have to be true of the world for each level of
-return — including the conditions for a 1,000x outcome — so a reader can judge
-the likelihood themselves. A projected return stated to a prospective investor
-is a forward-looking representation and carries real exposure for the issuer
-if it cannot be supported.
+It states the return multiples from the full deck — 104× to 1,377× — because
+they are the founders' own figures and the arithmetic behind them checks out.
+What it adds is the chain of assumptions underneath them, and the rung the
+original grid omits: a 0× outcome, which for a pre-licence venue that has not
+cleared a trade is the most likely single result.
