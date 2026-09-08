@@ -10,41 +10,39 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
 /* ===================================================================
-   Exascale — LP briefing.
+   Exascale — LP briefing. The plain-language edition of the investor
+   memorandum.
 
-   The simplified deck. Same app as the full memorandum: a 1280x720 stage
-   scaled to fit, scroll-snapped slides, a progress rail, prev/next, and a
-   slide map that clones each slide as a real preview. Gated by build.js.
+   Slide for slide with taihungau/deck: same twenty-three numbers, same
+   titles, same diagrams. Only the language changes — every sentence
+   rewritten for a reader who does not know what a GPU is, jargon defined
+   once on its own slide and then avoided. A reader can hold this beside
+   the full deck and slide 14 is slide 14 in both.
 
-   Deliberately dark-only. The full deck presents dark, this sits beside it,
-   and a briefing that flipped to a light ground on half the machines in a
+   Same app as the deck: a 1280x720 stage scaled to fit, scroll-snapped
+   slides, progress rail, prev/next, and a slide map that clones each slide
+   as a real preview. Gated by build.js.
+
+   Dark-only on purpose. The full deck presents dark and this sits beside
+   it; a briefing that flipped to a light ground on half the machines in a
    room would not read as the same document. Every colour is painted
    explicitly so the page never borrows a host's ground.
 
-   Palette is Exascale's jade, re-stepped for charts: brand #0A9078 reads grey
-   at chart size (chroma 0.095) and pairs with the site's steel blue at
-   normal-vision dE 12.7, under the 15 floor. Dark deck uses #19AD90 with an
-   ochre second hue, which clears all six colour checks against this ground.
+   Palette is Exascale's jade re-stepped for charts: brand #0A9078 reads
+   grey at chart size (chroma 0.095) and pairs with the site's steel blue
+   at normal-vision dE 12.7, under the 15 floor. #19AD90 with an ochre
+   second hue clears all six colour checks on this ground.
 
    Type is Spectral / Source Sans 3 / IBM Plex Mono rather than the deck's
-   Suisse and KH Interference. Those are trial licences whose terms prohibit
-   public use; these are open-licensed and carry the same editorial register.
+   Suisse and KH Interference, whose trial licences prohibit public use.
    =================================================================== */
 
 :root{
-  --ground:#0A0E0D;
-  --surface:#111716;
-  --surface-2:#18201E;
-  --line:rgba(228,240,236,.12);
-  --line-2:rgba(228,240,236,.055);
-  --ink:#E8F0ED;
-  --ink-soft:#B3C1BC;
-  --muted:#7A8985;
-  --jade:#19AD90;
-  --jade-lift:#57D3B8;
-  --jade-wash:rgba(25,173,144,.13);
-  --ochre:#C57742;
-  --ochre-wash:rgba(197,119,66,.15);
+  --ground:#0A0E0D; --surface:#111716; --surface-2:#18201E;
+  --line:rgba(228,240,236,.12); --line-2:rgba(228,240,236,.055);
+  --ink:#E8F0ED; --ink-soft:#B3C1BC; --muted:#7A8985;
+  --jade:#19AD90; --jade-lift:#57D3B8; --jade-wash:rgba(25,173,144,.13);
+  --ochre:#C57742; --ochre-wash:rgba(197,119,66,.15);
   --flag:#E2708A;
   --sans:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   --serif:"Spectral",Georgia,"Times New Roman",serif;
@@ -57,206 +55,228 @@ body{font-family:var(--sans);-webkit-font-smoothing:antialiased}
 
 /* ---------------------------------------------------------- deck shell */
 
-#deck{scroll-behavior:auto;height:100vh;height:100dvh;overflow-y:auto;
-  scroll-snap-type:y mandatory}
-.slide{height:100vh;height:100dvh;scroll-snap-align:start;display:flex;
-  align-items:center;justify-content:center;padding:0}
-/* The stage is a fixed 1280x720 canvas scaled to the layout viewport, so every
-   slide composes against one geometry rather than reflowing per screen. */
+#deck{scroll-behavior:auto;height:100vh;height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory}
+.slide{height:100vh;height:100dvh;scroll-snap-align:start;display:flex;align-items:center;justify-content:center}
 .stage{width:1280px;height:720px;flex:none;position:relative;
   transform:scale(var(--s,1));transform-origin:center center;
-  background:var(--ground);padding:58px 72px 64px;display:flex;
-  flex-direction:column}
-
+  background:var(--ground);padding:46px 66px 52px;display:flex;flex-direction:column}
 .rail{position:fixed;top:0;left:0;right:0;height:2px;background:var(--line-2);z-index:40}
 .rail i{display:block;height:100%;width:0;background:var(--jade);transition:width .3s ease}
 
-/* ---------------------------------------------------------- slide furniture */
+/* ---------------------------------------------------------- furniture */
 
-.sec{display:flex;align-items:center;gap:12px;font-family:var(--mono);
-  font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--jade)}
+.sec{display:flex;align-items:center;gap:11px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--jade);flex:none}
 .sec .n{color:var(--muted);font-variant-numeric:tabular-nums}
 .sec .bar{flex:1;height:1px;background:var(--line)}
+.sec .of{color:var(--muted);letter-spacing:.14em}
 
-h1{font-family:var(--serif);font-weight:500;font-size:70px;line-height:1.02;
-  letter-spacing:-.022em;margin:26px 0 0;max-width:19ch;text-wrap:balance}
-h2{font-family:var(--serif);font-weight:500;font-size:40px;line-height:1.1;
-  letter-spacing:-.018em;margin:18px 0 0;max-width:26ch;text-wrap:balance}
-h3{font-family:var(--sans);font-weight:700;font-size:16px;margin:0 0 6px}
-p{margin:0;font-size:17px;line-height:1.58;color:var(--ink-soft)}
+h1{font-family:var(--serif);font-weight:500;font-size:62px;line-height:1.03;
+  letter-spacing:-.022em;margin:22px 0 0;max-width:20ch;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:500;font-size:35px;line-height:1.12;
+  letter-spacing:-.018em;margin:14px 0 0;max-width:30ch;text-wrap:balance}
+h3{font-family:var(--sans);font-weight:700;font-size:15px;margin:0 0 5px;color:var(--ink)}
+p{margin:0;font-size:16px;line-height:1.55;color:var(--ink-soft)}
 strong{color:var(--ink);font-weight:700}
 em{font-style:italic}
-.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
-.body{margin-top:26px;flex:1;min-height:0}
-.lede{font-family:var(--serif);font-size:22px;line-height:1.48;color:var(--ink);
-  max-width:60ch;margin-top:18px}
+.lede{font-family:var(--serif);font-size:20px;line-height:1.46;color:var(--ink);max-width:64ch;margin-top:14px}
+.sub{font-size:15.5px;line-height:1.55;color:var(--ink-soft);max-width:82ch;margin-top:12px}
+.plain{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);
+  font-size:15px;line-height:1.55;color:var(--ink-soft);max-width:96ch}
+.plain b{color:var(--jade);font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;display:block;margin-bottom:5px;font-weight:400}
 
-/* the "ours, not the world's" marker — the deck's own discipline */
-.own{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;
-  vertical-align:2px;margin-left:4px;padding:1px 4px;color:var(--ochre);
-  border:1px solid var(--ochre);border-radius:2px;line-height:1.4}
-.cite{font-family:var(--mono);font-size:10px;vertical-align:5px;color:var(--jade);
-  margin-left:2px;font-variant-numeric:tabular-nums}
+.own{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;
+  vertical-align:2px;margin-left:4px;padding:0 4px;color:var(--ochre);
+  border:1px solid var(--ochre);border-radius:2px;line-height:1.5}
+.cite{font-family:var(--mono);font-size:9.5px;vertical-align:5px;color:var(--jade);margin-left:2px}
 
 /* ---------------------------------------------------------- stat strip */
 
-.stats{display:flex;gap:0;border-top:1px solid var(--line);margin-top:auto;padding-top:22px}
-.stats > div{flex:1;display:flex;flex-direction:column;gap:4px;padding-right:24px}
-.stats .v{font-family:var(--mono);font-size:34px;letter-spacing:-.025em;color:var(--ink);
+.stats{display:flex;border-top:1px solid var(--line);margin-top:auto;padding-top:18px;flex:none}
+.stats > div{flex:1;display:flex;flex-direction:column;gap:3px;padding-right:20px}
+.stats .v{font-family:var(--mono);font-size:29px;letter-spacing:-.025em;color:var(--ink);
   font-variant-numeric:tabular-nums;line-height:1}
 .stats .v.jade{color:var(--jade)}
-.stats .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--muted);line-height:1.4}
+.stats .v.sm{font-size:22px}
+.stats .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);line-height:1.4}
 
-/* ---------------------------------------------------------- grids */
+/* ---------------------------------------------------------- cards */
 
 .cards{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);
   border-radius:3px;overflow:hidden}
-.cards.c2{grid-template-columns:repeat(2,1fr)}
-.cards.c3{grid-template-columns:repeat(3,1fr)}
-.cards.c6{grid-template-columns:repeat(3,1fr)}
-.card{background:var(--surface);padding:20px 22px;display:flex;flex-direction:column;gap:7px}
-.card .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--jade)}
-.card .big{font-family:var(--mono);font-size:30px;color:var(--jade);letter-spacing:-.02em;
+.c2{grid-template-columns:repeat(2,1fr)} .c3{grid-template-columns:repeat(3,1fr)}
+.c4{grid-template-columns:repeat(4,1fr)} .c5{grid-template-columns:repeat(5,1fr)}
+.card{background:var(--surface);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--jade)}
+.card .big{font-family:var(--mono);font-size:26px;color:var(--jade);letter-spacing:-.02em;
   font-variant-numeric:tabular-nums;line-height:1}
-.card p{font-size:14.5px;line-height:1.5}
-.card .w{font-weight:700;font-size:16px;color:var(--ink)}
-
-/* numbered list used on the seven-sentences slide */
-.seven{display:grid;grid-template-columns:1fr 1fr;gap:14px 34px;margin-top:24px}
-.seven > li{list-style:none;display:grid;grid-template-columns:26px 1fr;gap:12px;
-  align-items:baseline}
-.seven b{font-family:var(--mono);font-size:13px;color:var(--jade);font-variant-numeric:tabular-nums}
-.seven p{font-size:15.5px;line-height:1.5}
+.card .w{font-weight:700;font-size:15px;color:var(--ink)}
+.card p{font-size:13.5px;line-height:1.48}
 
 /* ---------------------------------------------------------- tables */
 
-table{border-collapse:collapse;width:100%;font-size:15px}
-thead th{text-align:left;padding:9px 14px;font-family:var(--mono);font-size:10px;
-  font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+table{border-collapse:collapse;width:100%;font-size:14px}
+thead th{text-align:left;padding:8px 12px;font-family:var(--mono);font-size:9.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
   border-bottom:1px solid var(--line);background:var(--surface-2);white-space:nowrap}
 thead th.r,td.r{text-align:right}
-td{padding:11px 14px;border-bottom:1px solid var(--line-2);line-height:1.45;color:var(--ink-soft)}
+td{padding:8px 12px;border-bottom:1px solid var(--line-2);line-height:1.4;color:var(--ink-soft)}
 tbody tr:last-child td{border-bottom:0}
 td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
 td.hero{color:var(--ink);font-weight:700}
 tr.accent td{background:var(--jade-wash)}
 .tw{border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--surface)}
-.tnote{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px}
+.tnote{font-size:12.5px;line-height:1.5;color:var(--muted);margin-top:9px}
 
-/* ---------------------------------------------------------- flagged note */
+/* ---------------------------------------------------------- flagged */
 
-.flag{border-left:3px solid var(--ochre);background:var(--ochre-wash);
-  border-radius:0 3px 3px 0;padding:16px 20px}
-.flag .t{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ochre);margin-bottom:7px}
-.flag p{font-size:15px;line-height:1.52}
+.flag{border-left:3px solid var(--ochre);background:var(--ochre-wash);border-radius:0 3px 3px 0;
+  padding:13px 17px}
+.flag .t{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ochre);margin-bottom:5px}
+.flag p{font-size:14px;line-height:1.48}
 
-/* ---------------------------------------------------------- ladder */
+/* ---------------------------------------------------------- bar list */
 
-.ladder{display:flex;flex-direction:column;gap:1px;background:var(--line);
-  border:1px solid var(--line);border-radius:3px;overflow:hidden}
-.rung{background:var(--surface);padding:13px 20px;display:grid;
-  grid-template-columns:118px 1fr;gap:4px 20px;align-items:baseline}
-.rung .m{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--ink);
+.bars{display:flex;flex-direction:column;gap:9px}
+.bl{display:grid;grid-template-columns:190px 1fr 74px;gap:14px;align-items:center}
+.bl .nm{font-size:14px;color:var(--ink-soft);text-align:right}
+.bl .track{height:17px;background:var(--surface-2);border-radius:2px;overflow:hidden}
+.bl .fill{height:100%;background:var(--jade);opacity:.45;border-radius:2px}
+.bl.us .fill{opacity:1}
+.bl.us .nm{color:var(--ink);font-weight:700}
+.bl .val{font-family:var(--mono);font-size:13.5px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ---------------------------------------------------------- value chain */
+
+.chain{display:flex;align-items:stretch;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.ch{flex:1;background:var(--surface);padding:15px 16px;display:flex;flex-direction:column;gap:5px;
+  border-right:1px solid var(--line)}
+.ch:last-child{border-right:0}
+.ch.out{background:var(--jade-wash)}
+.ch .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.ch .v{font-family:var(--mono);font-size:23px;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.ch.out .v{color:var(--jade)}
+.ch p{font-size:12.5px;line-height:1.45}
+
+/* ---------------------------------------------------------- ladder / loop */
+
+.ladder{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);
+  border-radius:3px;overflow:hidden}
+.rung{background:var(--surface);padding:11px 18px;display:grid;grid-template-columns:112px 1fr;
+  gap:3px 18px;align-items:baseline}
+.rung .m{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--ink);
   font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.rung.zero .m{color:var(--flag)}
-.rung.top{background:var(--jade-wash)}
-.rung.top .m{color:var(--jade)}
-.rung .nm{font-weight:700;font-size:15px;color:var(--ink)}
-.rung .cd{grid-column:2;font-size:14px;line-height:1.5;color:var(--ink-soft)}
+.rung.zero .m{color:var(--flag)} .rung.top{background:var(--jade-wash)} .rung.top .m{color:var(--jade)}
+.rung .nm{font-weight:700;font-size:14.5px;color:var(--ink)}
+.rung .cd{grid-column:2;font-size:13.5px;line-height:1.46;color:var(--ink-soft)}
 
 /* ---------------------------------------------------------- risks */
 
 .risks{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
   border:1px solid var(--line);border-radius:3px;overflow:hidden}
-.rk{background:var(--surface);padding:15px 18px;display:flex;flex-direction:column;gap:5px}
-.rk .h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
-.rk .t{font-weight:700;font-size:14.5px;color:var(--ink)}
-.rk .s{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
-  padding:1px 6px;border-radius:2px;white-space:nowrap}
+.rk{background:var(--surface);padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.rk .h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.rk .t{font-weight:700;font-size:14px;color:var(--ink)}
+.rk .s{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:1px 5px;border-radius:2px;white-space:nowrap}
 .s-hi{color:var(--flag);border:1px solid var(--flag)}
 .s-md{color:var(--ochre);border:1px solid var(--ochre)}
-.rk p{font-size:13.5px;line-height:1.48}
+.rk p{font-size:12.5px;line-height:1.44}
 
-/* ---------------------------------------------------------- charts */
+/* ---------------------------------------------------------- figures */
 
-.figs{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
 figure{margin:0}
 figure svg{display:block;width:100%;height:auto;overflow:visible}
-figcaption{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px;
-  padding-top:10px;border-top:1px solid var(--line-2)}
+figcaption{font-size:12.5px;line-height:1.5;color:var(--muted);margin-top:10px;
+  padding-top:8px;border-top:1px solid var(--line-2)}
 .s-label{font-family:var(--mono);font-size:12px;fill:var(--muted)}
 .s-value{font-family:var(--mono);font-size:15px;font-weight:600;fill:var(--ink)}
-.s-name{font-family:var(--sans);font-size:14px;font-weight:600;fill:var(--ink)}
+.s-name{font-family:var(--sans);font-size:13px;font-weight:600;fill:var(--ink)}
+.figs{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+
+/* ---------------------------------------------------------- timeline */
+
+.tl{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.tl > div{flex:1;background:var(--surface);padding:14px 15px;display:flex;flex-direction:column;gap:5px}
+.tl .yr{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--jade)}
+.tl .w{font-weight:700;font-size:14px;color:var(--ink)}
+.tl p{font-size:12.5px;line-height:1.44}
+.tl .now{background:var(--jade-wash)}
+
+/* ---------------------------------------------------------- people */
+
+.people{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.pp{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.pp .nm{font-weight:700;font-size:15px;color:var(--ink)}
+.pp .rl{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--jade)}
+.pp p{font-size:12.5px;line-height:1.45}
 
 /* ---------------------------------------------------------- sources */
 
-.srcs{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;margin-top:22px;
-  list-style:none;padding:0}
-.srcs li{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:baseline}
-.srcs .n{font-family:var(--mono);font-size:11px;color:var(--jade);font-variant-numeric:tabular-nums}
-.srcs .t{font-size:14px;color:var(--ink);font-weight:600;line-height:1.35;margin:0}
-.srcs .m{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin:2px 0 0}
+.srcs{display:grid;grid-template-columns:1fr 1fr;gap:7px 26px;margin-top:14px;list-style:none;padding:0}
+.srcs li{display:grid;grid-template-columns:20px 1fr;gap:9px;align-items:baseline}
+.srcs .n{font-family:var(--mono);font-size:10px;color:var(--jade);font-variant-numeric:tabular-nums}
+.srcs .t{font-size:13px;color:var(--ink);font-weight:600;line-height:1.3;margin:0}
+.srcs .m{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin:1px 0 0;line-height:1.45}
 
 /* ---------------------------------------------------------- cover */
 
-.cover-mark{font-family:var(--mono);font-size:13px;letter-spacing:.3em;
-  text-transform:uppercase;color:var(--jade)}
-.cover-sub{font-family:var(--mono);font-size:11px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--muted);margin-top:8px}
+.cover-mark{font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--jade)}
+.cover-sub{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);margin-top:7px}
 
 /* ---------------------------------------------------------- nav */
 
-.nav{position:fixed;right:26px;bottom:24px;z-index:45;display:flex;align-items:center;
-  gap:10px;font-family:var(--mono);font-size:12px;color:var(--muted)}
-.nav button{font-family:var(--mono);font-size:15px;line-height:1;color:var(--ink-soft);
+.nav{position:fixed;right:24px;bottom:22px;z-index:45;display:flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:12px;color:var(--muted)}
+.nav button{font-family:var(--mono);font-size:14px;line-height:1;color:var(--ink-soft);
   background:color-mix(in srgb,var(--surface) 80%,transparent);border:1px solid var(--line);
-  border-radius:8px;padding:8px 12px;cursor:pointer;transition:color .14s,border-color .14s,background .14s}
+  border-radius:8px;padding:7px 11px;cursor:pointer;transition:color .14s,border-color .14s,background .14s}
 .nav button:hover{color:var(--jade);border-color:var(--jade);background:var(--jade-wash)}
 .nav button:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
 .count{font-variant-numeric:tabular-nums;letter-spacing:.1em}
 .count b{color:var(--ink);font-weight:400}
-.hint{position:fixed;left:26px;bottom:26px;z-index:45;font-family:var(--mono);
-  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-.hint kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:3px;
-  padding:1px 5px;color:var(--ink-soft)}
+.hint{position:fixed;left:24px;bottom:24px;z-index:45;font-family:var(--mono);font-size:10px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.hint kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink-soft)}
 
 /* ---------------------------------------------------------- slide map */
 
 #slideMap{position:fixed;inset:0;z-index:60;background:rgba(6,10,9,.94);
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  display:none;flex-direction:column}
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:none;flex-direction:column}
 #slideMap.open{display:flex}
-.mp-bar{display:flex;align-items:center;gap:14px;padding:16px 26px;
-  border-bottom:1px solid var(--line);background:var(--surface)}
-.mp-bar b{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+.mp-bar{display:flex;align-items:center;gap:13px;padding:15px 24px;border-bottom:1px solid var(--line);
+  background:var(--surface)}
+.mp-bar b{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--jade);font-weight:400}
-.mp-n{font-family:var(--mono);font-size:11px;color:var(--muted)}
-.mp-keys{margin-left:auto;display:flex;gap:14px;align-items:center;
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.mp-x{font-family:var(--mono);font-size:15px;line-height:1;color:var(--ink-soft);
-  background:transparent;border:1px solid var(--line);border-radius:7px;
-  padding:5px 11px;cursor:pointer}
+.mp-n{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.mp-keys{margin-left:auto;display:flex;gap:13px;align-items:center;font-family:var(--mono);
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mp-x{font-family:var(--mono);font-size:14px;line-height:1;color:var(--ink-soft);background:transparent;
+  border:1px solid var(--line);border-radius:7px;padding:5px 10px;cursor:pointer}
 .mp-x:hover{color:var(--jade);border-color:var(--jade);background:var(--jade-wash)}
-.mp-grid{flex:1;overflow-y:auto;display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:20px;padding:24px 26px 34px}
-.th{background:transparent;border:0;padding:0;cursor:pointer;display:flex;
-  flex-direction:column;gap:8px;text-align:left}
+.mp-grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));
+  gap:18px;padding:22px 24px 30px}
+.th{background:transparent;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;gap:7px;text-align:left}
 .th-frame{position:relative;display:block;width:100%;aspect-ratio:16/9;overflow:hidden;
   border:1px solid var(--line);border-radius:4px;background:var(--ground);
   transition:box-shadow .16s ease,border-color .16s ease}
 .th:hover .th-frame{border-color:var(--jade)}
 .th.on .th-frame{box-shadow:0 0 0 2px var(--jade),0 0 26px rgba(25,173,144,.20)}
-/* The clone is a real slide at 1280x720, shrunk by the measured track width. */
-.th-scale{display:block;width:1280px;height:720px;transform:scale(var(--k,.18));
+.th-scale{display:block;width:1280px;height:720px;transform:scale(var(--k,.17));
   transform-origin:top left;pointer-events:none}
 .th-scale .slide{height:720px;display:block}
 .th-scale .stage{transform:none;width:1280px;height:720px}
-.th-cap{display:flex;align-items:baseline;gap:9px;font-family:var(--mono);font-size:11px;
-  color:var(--muted)}
+.th-cap{display:flex;align-items:baseline;gap:8px;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
 .th-cap b{color:var(--jade);font-weight:400;font-variant-numeric:tabular-nums}
+/* The focus ring belongs on the preview, not on the button box — the button
+   wraps the caption too, so the UA default draws a rectangle round both and
+   reads as a stray black band under the thumbnail. */
+.th:focus{outline:none}
 .th:focus-visible .th-frame{outline:2px solid var(--jade);outline-offset:2px}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -271,434 +291,861 @@ figcaption{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px;
 <body>
 
 <div class="rail"><i id="railFill"></i></div>
-
 <main id="deck">
 
-<!-- ============================================================ 01 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">01</span><span class="s">Cover</span><span class="bar"></span></div>
-    <div style="margin-top:34px">
-      <div class="cover-mark">Exascale</div>
-      <div class="cover-sub">Briefing for limited partners &middot; Confidential</div>
-    </div>
-    <h1>The tollbooth on the road everyone is paving.</h1>
-    <p class="lede" style="margin-top:24px">
-      The world is spending hundreds of billions a year building computers to run artificial
-      intelligence. There is still no marketplace where that computing power is bought and sold at
-      one public price. Exascale is building it, and has signed contracts on both sides.
-    </p>
-    <div class="stats">
-      <div><span class="v jade">$137M</span><span class="l">Supply contracted<span class="own">OURS</span></span></div>
-      <div><span class="v jade">$1.34B</span><span class="l">Demand under LOI<span class="own">OURS</span></span></div>
-      <div><span class="v">4.7&times;</span><span class="l">Price gap we close<span class="cite">5</span></span></div>
-      <div><span class="v">$0</span><span class="l">Chips we buy</span></div>
-    </div>
+<!-- ========================================================= 01 Cover -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">01</span><span class="s">Cover</span><span class="bar"></span><span class="of">Plain-language edition</span></div>
+  <div style="margin-top:28px">
+    <div class="cover-mark">Exascale</div>
+    <div class="cover-sub">A Hyperlink company &middot; Briefing for limited partners &middot; Confidential</div>
   </div>
-</section>
-
-<!-- ============================================================ 02 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">02</span><span class="s">Summary</span><span class="bar"></span></div>
-    <h2>The whole thing in seven sentences.</h2>
-    <ol class="seven">
-      <li><b>01</b><p><strong>AI runs on specialised chips</strong> called GPUs. Every AI product needs them, by the thousand, running day and night.</p></li>
-      <li><b>02</b><p><strong>The world is desperately short.</strong> The four biggest tech firms committed ~$725bn to building capacity in 2026, up 77%.<span class="cite">1</span> Only $193.7bn of chips arrived.<span class="cite">2</span></p></li>
-      <li><b>03</b><p><strong>It cannot be fixed quickly.</strong> Demand grew sevenfold in a year; capacity grew 36%.<span class="cite">3</span><span class="cite">4</span> A grid connection takes 5&ndash;10 years.<span class="cite">6</span></p></li>
-      <li><b>04</b><p><strong>So prices are chaos.</strong> The identical chip rents for $1.49 to $6.98 an hour on the same day.<span class="cite">5</span> Oil moves 0.01% between sellers, because oil has an exchange.</p></li>
-      <li><b>05</b><p><strong>Exascale is that exchange.</strong> We buy no chips and own no buildings. We run the marketplace and keep a slice of what crosses it.</p></li>
-      <li><b>06</b><p><strong>Both sides are signed.</strong> $137m of supply across 13 data centres; $1.34bn of demand under letters of intent across 214 named accounts.<span class="own">OURS</span></p></li>
-      <li><b>07</b><p><strong>The raise is $10m,</strong> of which $1.72m is wired. A $5m cheque would be most of what remains.</p></li>
-    </ol>
-    <div class="flag" style="margin-top:22px">
-      <span class="t">Hold this in your head while you read</span>
-      <p><strong>Signed is not banked.</strong> The $1.34bn is under letters of intent &mdash; statements of intent to buy, not binding orders. No trade has yet crossed the exchange. Figures marked <span class="own">OURS</span> are Exascale's own; numbered figures come from an outside party you can check.</p>
-    </div>
+  <h1>The world&rsquo;s marketplace for computing power.</h1>
+  <p class="lede">
+    Artificial intelligence runs on specialised chips. Everyone wants them, nobody can get enough, and
+    there is still no marketplace where they are bought and sold at one public price. Exascale is
+    building that marketplace &mdash; and has already signed contracts on both sides of it.
+  </p>
+  <div class="stats">
+    <div><span class="v jade">$137M</span><span class="l">Supply contracted<span class="own">OURS</span></span></div>
+    <div><span class="v jade">$1.34B</span><span class="l">Demand signed up<span class="own">OURS</span></span></div>
+    <div><span class="v">13</span><span class="l">Data centres</span></div>
+    <div><span class="v">110MW+</span><span class="l">Electricity contracted</span></div>
+    <div><span class="v">2</span><span class="l">Continents</span></div>
   </div>
-</section>
+  <p class="plain" style="margin-top:16px"><b>This document</b>
+    This is the investor deck, slide for slide, in ordinary English. Slide 14 here is slide 14 there.
+    Figures marked <span class="own">OURS</span> are Exascale&rsquo;s own and cannot be checked from
+    outside; numbered figures come from someone else, listed at the end.</p>
+</div></section>
 
-<!-- ============================================================ 03 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">03</span><span class="s">Vocabulary</span><span class="bar"></span></div>
-    <h2>The only six words you need.</h2>
-    <p style="margin-top:14px;max-width:70ch">The rest of this deck avoids jargon. These six are unavoidable, so here they are once.</p>
-    <div class="cards c6" style="margin-top:26px">
-      <div class="card"><span class="k">GPU</span><p>A specialised computer chip. The engine AI runs on &mdash; a very expensive, very fast electric motor.</p></div>
-      <div class="card"><span class="k">GPU-hour</span><p>One chip running for one hour. The unit that gets bought and sold, the way oil is sold by the barrel.</p></div>
-      <div class="card"><span class="k">Exchange</span><p>A marketplace with one public price where buyers and sellers meet. A stock exchange, but for computing power.</p></div>
-      <div class="card"><span class="k">Take rate</span><p>The small percentage the marketplace keeps from each transaction. How we get paid.</p></div>
-      <div class="card"><span class="k">Basis point</span><p>One hundredth of one percent. "180 basis points" means 1.8%. Bankers count this way; it means nothing more.</p></div>
-      <div class="card"><span class="k">LOI</span><p>Letter of intent. A signed statement that a customer intends to buy. Serious, but not yet an order.</p></div>
-    </div>
+<!-- ========================================================= 02 Scale Today -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">02</span><span class="s">Scale today</span><span class="bar"></span></div>
+  <h2>Both sides have already signed.</h2>
+  <p class="sub">
+    Most companies raising money at this stage have a plan and a slide about it. Exascale has signed
+    paper from the people who own the chips <em>and</em> from the people who want to rent them.
+    That is genuinely unusual, and it is the strongest single fact in this deck.
+  </p>
+  <div class="chain" style="margin-top:20px">
+    <div class="ch"><span class="k">The sell side</span><span class="v">$137M</span>
+      <p>Signed with 13 data centres across two continents &mdash; 6,228 chips and 110 megawatts of electricity.</p></div>
+    <div class="ch"><span class="k">The buy side</span><span class="v">$1.34B</span>
+      <p>214 named companies have signed letters of intent. Each one has a budget, a named person, and a date they need it by.</p></div>
+    <div class="ch out"><span class="k">Demand vs supply</span><span class="v">9.8&times;</span>
+      <p>They have signed up nearly ten times more demand than they have capacity to serve.</p></div>
+    <div class="ch"><span class="k">Year-one billing</span><span class="v">$36M</span>
+      <p>What the contracted supply would bill in twelve months, at a 71% operating margin.</p></div>
   </div>
-</section>
-
-<!-- ============================================================ 04 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">04</span><span class="s">Supply &amp; demand</span><span class="bar"></span></div>
-    <h2>Demand multiplies. Supply adds.</h2>
-    <div class="figs" style="margin-top:24px">
-      <figure>
-        <svg viewBox="0 0 560 300" role="img" aria-label="Bar chart: over one year AI demand grew sevenfold while deliverable data centre capacity grew 36 percent, both starting from an index of one.">
-          <line x1="70" y1="248" x2="548" y2="248" stroke="rgba(228,240,236,.12)" stroke-width="1"></line>
-          <!-- gridline at exactly 7.0 so the label names a value the chart reaches -->
-          <line x1="70" y1="58" x2="548" y2="58" stroke="rgba(228,240,236,.055)" stroke-width="1"></line>
-          <text class="s-label" x="62" y="62" text-anchor="end">7&times;</text>
-          <text class="s-label" x="62" y="252" text-anchor="end">0</text>
-          <!-- scale: 7.5 over 190px. demand 7.0 -> 177.3px -->
-          <path d="M120,248 L120,74.7 Q120,70.7 124,70.7 L246,70.7 Q250,70.7 250,74.7 L250,248 Z" fill="#19AD90"></path>
-          <text class="s-value" x="185" y="58" text-anchor="middle">7.0&times;</text>
-          <text class="s-name" x="185" y="274" text-anchor="middle">AI demand</text>
-          <!-- supply 1.36 -> 34.5px -->
-          <path d="M370,248 L370,217.5 Q370,213.5 374,213.5 L496,213.5 Q500,213.5 500,217.5 L500,248 Z" fill="#19AD90" opacity="0.42"></path>
-          <text class="s-value" x="435" y="203" text-anchor="middle">1.36&times;</text>
-          <text class="s-name" x="435" y="274" text-anchor="middle">Usable capacity</text>
-        </svg>
-        <figcaption>One year of growth, both starting at 1. Demand is AI requests handled at Google<span class="cite">3</span>; supply is deliverable North American capacity.<span class="cite">4</span></figcaption>
-      </figure>
-      <div>
-        <p style="font-size:18px">
-          In one year the number of AI requests handled at Google rose <strong>sevenfold</strong>.<span class="cite">3</span>
-          Over the same year, usable data-centre capacity in North America grew <strong>36%</strong>.<span class="cite">4</span>
-          Not 36% short of demand &mdash; 36% growth against 600%.
-        </p>
-        <div class="tw" style="margin-top:20px">
-          <table>
-            <thead><tr><th>Adding one megawatt</th><th class="r">Takes</th></tr></thead>
-            <tbody>
-              <tr><td>Get chips allocated</td><td class="num r">3&ndash;6 months</td></tr>
-              <tr><td>Build the shell, fit it out</td><td class="num r">12&ndash;24 months</td></tr>
-              <tr><td>Obtain a power transformer</td><td class="num r">2&ndash;4 years</td></tr>
-              <tr class="accent"><td>Connect to the electricity grid</td><td class="num r">5&ndash;10 years</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="tnote">2,600 GW sits in US grid queues,<span class="cite">6</span> and the trades are short 439,000 workers to build it.<span class="cite">7</span> Vacancy in primary markets is 1.4%; Northern Virginia is 0.3%.<span class="cite">4</span></p>
-      </div>
-    </div>
+  <div class="cards c4" style="margin-top:16px">
+    <div class="card"><span class="k">Four things they built</span><p><strong>The meter</strong> &mdash; counts every second a chip is used, on someone else&rsquo;s racks.</p></div>
+    <div class="card"><span class="k">&nbsp;</span><p><strong>The cloud</strong> &mdash; lets a customer rent those chips without knowing whose they are.</p></div>
+    <div class="card"><span class="k">&nbsp;</span><p><strong>The model service</strong> &mdash; 500+ AI models behind a single account.</p></div>
+    <div class="card"><span class="k">&nbsp;</span><p><strong>The exchange</strong> &mdash; where buyers and sellers meet and a public price forms.</p></div>
   </div>
-</section>
+  <p class="plain"><b>In plain terms</b>
+    A letter of intent is a signed statement that a customer intends to buy. It is serious &mdash; nobody
+    signs one casually &mdash; but it is not an order, and the deck says so itself: demand is
+    &ldquo;under signed LOI, <em>not booked</em>.&rdquo; Nothing has been paid yet.</p>
+</div></section>
 
-<!-- ============================================================ 05 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">05</span><span class="s">The gap</span><span class="bar"></span></div>
-    <h2>The same chip, the same day, at five times the price.</h2>
-    <p class="lede" style="margin-top:16px">This one fact is the reason the company exists. If you remember a single chart, remember this one.</p>
-    <figure style="margin-top:22px">
-      <svg viewBox="0 0 1136 190" role="img" aria-label="Range chart: quoted H100 hourly rates span 1.49 to 6.98 US dollars on one day. Specialist providers occupy the band up to about 2.50 dollars; every other provider ranges above it.">
-        <line x1="60" y1="150" x2="1120" y2="150" stroke="rgba(228,240,236,.12)" stroke-width="1"></line>
-        <g>
-          <line x1="60"    y1="150" x2="60"    y2="157" stroke="rgba(228,240,236,.12)"></line>
-          <line x1="211.4" y1="150" x2="211.4" y2="157" stroke="rgba(228,240,236,.12)"></line>
-          <line x1="362.9" y1="150" x2="362.9" y2="157" stroke="rgba(228,240,236,.12)"></line>
-          <line x1="514.3" y1="150" x2="514.3" y2="157" stroke="rgba(228,240,236,.12)"></line>
-          <line x1="665.7" y1="150" x2="665.7" y2="157" stroke="rgba(228,240,236,.12)"></line>
-          <line x1="817.1" y1="150" x2="817.1" y2="157" stroke="rgba(228,240,236,.12)"></line>
-          <line x1="968.6" y1="150" x2="968.6" y2="157" stroke="rgba(228,240,236,.12)"></line>
-          <line x1="1120"  y1="150" x2="1120"  y2="157" stroke="rgba(228,240,236,.12)"></line>
-          <text class="s-label" x="60"    y="175" text-anchor="middle">$0</text>
-          <text class="s-label" x="211.4" y="175" text-anchor="middle">$1</text>
-          <text class="s-label" x="362.9" y="175" text-anchor="middle">$2</text>
-          <text class="s-label" x="514.3" y="175" text-anchor="middle">$3</text>
-          <text class="s-label" x="665.7" y="175" text-anchor="middle">$4</text>
-          <text class="s-label" x="817.1" y="175" text-anchor="middle">$5</text>
-          <text class="s-label" x="968.6" y="175" text-anchor="middle">$6</text>
-          <text class="s-label" x="1120"  y="175" text-anchor="middle">$7</text>
-        </g>
-        <!-- Two adjacent segments with a 2px surface gap, so the boundary at
-             $2.50 is a real edge rather than one fill lying over another. -->
-        <path d="M289.7,80 L437.9,80 L437.9,120 L289.7,120 Q285.7,120 285.7,116 L285.7,84 Q285.7,80 289.7,80 Z" fill="#19AD90"></path>
-        <path d="M439.9,80 L1053,80 Q1057,80 1057,84 L1057,116 Q1057,120 1053,120 L439.9,120 Z" fill="#19AD90" opacity="0.17"></path>
-        <line x1="285.7" y1="72" x2="285.7" y2="128" stroke="#19AD90" stroke-width="2"></line>
-        <line x1="1057"  y1="72" x2="1057"  y2="128" stroke="#C57742" stroke-width="2"></line>
-        <text class="s-value" x="285.7" y="58" text-anchor="start">$1.49</text>
-        <text class="s-label" x="285.7" y="38" text-anchor="start">cheapest quoted</text>
-        <text class="s-value" x="1057"  y="58" text-anchor="end">$6.98</text>
-        <text class="s-label" x="1057"  y="38" text-anchor="end">dearest quoted</text>
-        <text class="s-label" x="361.8" y="141" text-anchor="middle">specialists</text>
-        <text class="s-label" x="748"   y="141" text-anchor="middle">everyone else</text>
+<!-- ========================================================= 03 Team -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">03</span><span class="s">Team</span><span class="bar"></span></div>
+  <h2>Eighty-one people, most of them engineers.</h2>
+  <div class="people" style="margin-top:18px">
+    <div class="pp"><span class="nm">Tai Au</span><span class="rl">Founder &middot; Vision &amp; technology</span>
+      <p>Built the exchange, the AI service and the chip cloud. Working in AI since 2014; before that, private equity.</p></div>
+    <div class="pp"><span class="nm">Kevin Adeson</span><span class="rl">Founder &middot; Chairman &middot; Capital</span>
+      <p>Vice Chairman of Global Banking &amp; Markets at HSBC. Built Morgan Stanley&rsquo;s European leveraged finance business. Thirty years raising money for the world&rsquo;s largest funds.</p></div>
+    <div class="pp"><span class="nm">Marta Parke</span><span class="rl">Founder &middot; People &amp; operations</span>
+      <p>Sold $130M+ of cloud contracts to Cartier, Bank of China and CLSA. Then private equity in energy and heavy industry.</p></div>
+    <div class="pp"><span class="nm">Raeez Lorgat</span><span class="rl">Founding member &middot; Growth</span>
+      <p>Built the first version of Stripe &mdash; now worth $159 billion &mdash; with the Collison brothers, leaving MIT in 2010. Then a decade of mathematics.</p></div>
+    <div class="pp"><span class="nm">Simon Stringer, PhD</span><span class="rl">Founding scientist &middot; Frontier AI</span>
+      <p>Thirty-two years at Oxford; Director of its Centre for Theoretical Neuroscience and Artificial Intelligence.</p></div>
+    <div class="pp"><span class="nm">The engineering organisation</span><span class="rl">66 researchers</span>
+      <p>Chosen from 9,200 applicants &mdash; 0.7% accepted. Six PhDs, four from Anthropic, OpenAI and DeepMind. Out of Google, Microsoft, AWS, Tesla, AMD and TSMC.</p></div>
+  </div>
+  <div class="stats" style="margin-top:16px">
+    <div><span class="v">81</span><span class="l">Total team</span></div>
+    <div><span class="v">66</span><span class="l">Product &amp; engineering</span></div>
+    <div><span class="v">9</span><span class="l">Marketing &amp; sales &middot; $1.1B exit</span></div>
+    <div><span class="v">6</span><span class="l">Leadership &amp; founding</span></div>
+    <div><span class="v jade">0.7%</span><span class="l">Of 9,200 applicants hired</span></div>
+  </div>
+  <p class="plain"><b>Read the counts carefully</b>
+    The six panels above are not six people: five are individuals and the sixth is the whole
+    engineering organisation. The totals count everyone on the team, including people this slide does
+    not picture. The numbers and the panels are not meant to match.</p>
+</div></section>
+
+<!-- ========================================================= 04 Market Problem -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">04</span><span class="s">The problem</span><span class="bar"></span></div>
+  <h2>Demand multiplies. Supply adds. They cannot meet.</h2>
+  <div class="figs" style="margin-top:18px">
+    <figure>
+      <svg viewBox="0 0 540 250" role="img" aria-label="Bar chart: in one year AI demand grew sevenfold while usable data centre capacity grew 36 percent, both from an index of one.">
+        <line x1="66" y1="205" x2="528" y2="205" stroke="rgba(228,240,236,.12)"></line>
+        <line x1="66" y1="45" x2="528" y2="45" stroke="rgba(228,240,236,.055)"></line>
+        <text class="s-label" x="58" y="49" text-anchor="end">7&times;</text>
+        <text class="s-label" x="58" y="209" text-anchor="end">0</text>
+        <!-- scale 7.5 over 160px; demand 7.0 -> 149.3px -->
+        <path d="M112,205 L112,59.7 Q112,55.7 116,55.7 L234,55.7 Q238,55.7 238,59.7 L238,205 Z" fill="#19AD90"></path>
+        <text class="s-value" x="175" y="44" text-anchor="middle">7.0&times;</text>
+        <text class="s-name" x="175" y="230" text-anchor="middle">AI demand</text>
+        <!-- supply 1.36 -> 29px -->
+        <path d="M356,205 L356,180 Q356,176 360,176 L478,176 Q482,176 482,180 L482,205 Z" fill="#19AD90" opacity="0.42"></path>
+        <text class="s-value" x="419" y="166" text-anchor="middle">1.36&times;</text>
+        <text class="s-name" x="419" y="230" text-anchor="middle">Usable capacity</text>
       </svg>
-      <figcaption>NVIDIA H100, quoted hourly rates across 15+ providers on one day.<span class="cite">5</span> Quoted rates only &mdash; the largest customers negotiate privately and those prices are not public anywhere, which is itself part of the problem being described.</figcaption>
+      <figcaption>One year of growth, both starting at 1. Demand is AI requests handled at Google<span class="cite">3</span>; supply is usable North American data-centre capacity.<span class="cite">4</span></figcaption>
     </figure>
-    <div class="stats">
-      <div><span class="v jade">4.7&times;</span><span class="l">Spread, same chip, same day</span></div>
-      <div><span class="v">0.01%</span><span class="l">Spread on a barrel of Brent</span></div>
-      <div><span class="v">&minus;79%, +38%</span><span class="l">H100 price, then five months later<span class="cite">8</span></span></div>
-      <div><span class="v">0</span><span class="l">Exchanges where a GPU-hour has a bid</span></div>
+    <div>
+      <p style="font-size:16.5px">
+        In one year the number of AI requests handled at Google alone rose <strong>sevenfold</strong>.
+        Over the same year, the amount of usable data-centre space in North America grew
+        <strong>36%</strong>. Not 36% short &mdash; 36% growth against 600%.
+      </p>
+      <div class="tw" style="margin-top:16px">
+        <table>
+          <thead><tr><th>To add one megawatt of capacity</th><th class="r">Takes</th></tr></thead>
+          <tbody>
+            <tr><td>Get the chips allocated to you</td><td class="num r">3&ndash;6 months</td></tr>
+            <tr><td>Build the shell and fit it out</td><td class="num r">12&ndash;24 months</td></tr>
+            <tr><td>Obtain a power transformer</td><td class="num r">2&ndash;4 years</td></tr>
+            <tr class="accent"><td>Connect it to the electricity grid</td><td class="num r">5&ndash;10 years</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote">Even with unlimited money, the queue for a grid connection is measured in years, not months.</p>
     </div>
   </div>
-</section>
+  <div class="stats">
+    <div><span class="v">$725B</span><span class="l">Committed to build in 2026, up 77%<span class="cite">1</span></span></div>
+    <div><span class="v">$193.7B</span><span class="l">Of chips actually delivered<span class="cite">2</span></span></div>
+    <div><span class="v">1.4%</span><span class="l">Space free. N. Virginia is 0.3%<span class="cite">4</span></span></div>
+    <div><span class="v">2,600 GW</span><span class="l">Waiting in US grid queues<span class="cite">6</span></span></div>
+    <div><span class="v">439,000</span><span class="l">Builders the trades are short<span class="cite">7</span></span></div>
+  </div>
+</div></section>
 
-<!-- ============================================================ 06 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">06</span><span class="s">What exists</span><span class="bar"></span></div>
-    <h2>Both sides are signed. Neither side is banked.</h2>
-    <p style="margin-top:14px;max-width:76ch">
-      Most companies raising at this stage have a plan. Exascale has signed paper on both sides of
-      its market, which is genuinely unusual and is the strongest part of the case. It is also worth
-      being precise about what that paper is.
-    </p>
-    <div class="tw" style="margin-top:22px">
-      <table>
-        <thead><tr><th>What they have</th><th class="r">Size</th><th>What it actually is</th></tr></thead>
-        <tbody>
-          <tr><td class="hero">Supply contracted</td><td class="num r">$137M</td><td>Signed contracts and LOIs across 13 data centres, 110+ megawatts, 6,228 chips, two continents.</td></tr>
-          <tr><td class="hero">Demand under LOI</td><td class="num r">$1.34B</td><td>214 named accounts, 61,376 chips requested, each with a budget, an owner and a need-by date. 91% reachable at a named decision-maker.</td></tr>
-          <tr class="accent"><td class="hero">Demand vs. supply</td><td class="num r">9.8&times;</td><td>Nearly ten times more demand signed up than they have capacity to serve.</td></tr>
-          <tr><td class="hero">Trades cleared</td><td class="num r">0</td><td>The exchange is built and running, but nothing has crossed it. The full deck labels its trading screens "demonstration data."</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="flag" style="margin-top:20px">
-      <span class="t">How to read "9.8 times more demand than supply"</span>
-      <p>It is real evidence that the shortage is genuine, and the best evidence in the deck. It is <em>not</em> revenue waiting to be collected &mdash; you cannot sell capacity you do not have. The gap is the argument <em>for</em> the business model, since an exchange lets them sell other people's capacity too, rather than a number that converts to cash.</p>
-    </div>
-  </div>
-</section>
+<!-- ========================================================= 05 Why Now -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">05</span><span class="s">Why now</span><span class="bar"></span></div>
+  <h2>Oil has an exchange. Compute has an email thread.</h2>
+  <p class="sub">The identical chip, on the same day, quoted by fifteen different sellers. This is what a market looks like before anyone builds an exchange for it.</p>
+  <figure style="margin-top:16px">
+    <svg viewBox="0 0 1148 172" role="img" aria-label="Range chart: quoted H100 hourly rates run from 1.49 to 6.98 dollars on one day. Specialist providers occupy the band up to about 2.50 dollars; every other provider ranges above it.">
+      <line x1="56" y1="132" x2="1132" y2="132" stroke="rgba(228,240,236,.12)"></line>
+      <g>
+        <line x1="56"    y1="132" x2="56"    y2="139" stroke="rgba(228,240,236,.12)"></line>
+        <line x1="209.7" y1="132" x2="209.7" y2="139" stroke="rgba(228,240,236,.12)"></line>
+        <line x1="363.4" y1="132" x2="363.4" y2="139" stroke="rgba(228,240,236,.12)"></line>
+        <line x1="517.1" y1="132" x2="517.1" y2="139" stroke="rgba(228,240,236,.12)"></line>
+        <line x1="670.9" y1="132" x2="670.9" y2="139" stroke="rgba(228,240,236,.12)"></line>
+        <line x1="824.6" y1="132" x2="824.6" y2="139" stroke="rgba(228,240,236,.12)"></line>
+        <line x1="978.3" y1="132" x2="978.3" y2="139" stroke="rgba(228,240,236,.12)"></line>
+        <line x1="1132"  y1="132" x2="1132"  y2="139" stroke="rgba(228,240,236,.12)"></line>
+        <text class="s-label" x="56"    y="156" text-anchor="middle">$0</text>
+        <text class="s-label" x="209.7" y="156" text-anchor="middle">$1</text>
+        <text class="s-label" x="363.4" y="156" text-anchor="middle">$2</text>
+        <text class="s-label" x="517.1" y="156" text-anchor="middle">$3</text>
+        <text class="s-label" x="670.9" y="156" text-anchor="middle">$4</text>
+        <text class="s-label" x="824.6" y="156" text-anchor="middle">$5</text>
+        <text class="s-label" x="978.3" y="156" text-anchor="middle">$6</text>
+        <text class="s-label" x="1132"  y="156" text-anchor="middle">$7</text>
+      </g>
+      <!-- two adjacent segments with a 2px gap, so $2.50 is a real edge -->
+      <path d="M285,66 L439.6,66 L439.6,104 L285,104 Q281,104 281,100 L281,70 Q281,66 285,66 Z" fill="#19AD90"></path>
+      <path d="M441.6,66 L1068,66 Q1072,66 1072,70 L1072,100 Q1072,104 1068,104 L441.6,104 Z" fill="#19AD90" opacity="0.17"></path>
+      <line x1="281"  y1="58" x2="281"  y2="112" stroke="#19AD90" stroke-width="2"></line>
+      <line x1="1072" y1="58" x2="1072" y2="112" stroke="#C57742" stroke-width="2"></line>
+      <text class="s-value" x="281"  y="44" text-anchor="start">$1.49</text>
+      <text class="s-label" x="281"  y="26" text-anchor="start">cheapest quoted</text>
+      <text class="s-value" x="1072" y="44" text-anchor="end">$6.98</text>
+      <text class="s-label" x="1072" y="26" text-anchor="end">dearest quoted</text>
+      <text class="s-label" x="360" y="126" text-anchor="middle">specialists</text>
+      <text class="s-label" x="755" y="126" text-anchor="middle">everyone else</text>
+    </svg>
+    <figcaption>One chip &mdash; an NVIDIA H100 &mdash; quoted hourly by 15+ sellers on a single day.<span class="cite">5</span> A barrel of Brent crude moves about <strong>0.01%</strong> between sellers, because oil has had an exchange since 1988.</figcaption>
+  </figure>
+  <p class="plain" style="margin-top:14px"><b>Why an exchange appears now and not before</b>
+    Every commodity got one when three things became true at once: the thing being sold became
+    standard, lots of different people started selling it, and the price began moving faster than
+    contracts could be renegotiated. All three are now true. The chip price fell 79%, then rose 38% in
+    five months<span class="cite">8</span> &mdash; and nobody could protect themselves against either move.</p>
+</div></section>
 
-<!-- ============================================================ 07 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">07</span><span class="s">Business model</span><span class="bar"></span></div>
-    <h2>Three tolls on the same hour of computing.</h2>
-    <p class="lede" style="margin-top:16px">Exascale charges at three points on one chain, and never buys the chip. The third toll is the smallest percentage and becomes the largest business.</p>
-    <div class="cards c3" style="margin-top:26px">
-      <div class="card">
-        <span class="k">Sell side &middot; GPU cloud</span>
-        <span class="big">30%</span>
-        <span class="w">Of what we sell for a data centre</span>
-        <p>We run the software that lets an operator rent out idle racks. It costs them nothing; they keep 70% and stop having to sell their own capacity.</p>
-      </div>
-      <div class="card">
-        <span class="k">Buy side &middot; AI platform</span>
-        <span class="big">5&ndash;25&times;</span>
-        <span class="w">Markup on raw computing cost</span>
-        <p>One key gives a customer 500+ AI models. We serve them on capacity we already meter, so the gap between retail price and cost underneath is ours.</p>
-      </div>
-      <div class="card">
-        <span class="k">The venue &middot; exchange</span>
-        <span class="big">1.8%</span>
-        <span class="w">Of every trade that crosses the book</span>
-        <p>Charged to the side that takes a price; the side that posts one is rebated. Smallest rate, and by year five roughly two-thirds of all revenue.</p>
-      </div>
-    </div>
-    <div class="cards c2" style="margin-top:20px">
-      <div class="card">
-        <h3>The number to hold onto</h3>
-        <p>At 1.8%, a million dollars of computing power changing hands earns $18,000. $193.7bn of AI chips sold in a single year,<span class="cite">2</span> every hour of it resold bilaterally &mdash; about <strong>$3.5bn a year</strong> of fees sitting there, uncollected, because no exchange exists.</p>
-      </div>
-      <div class="card">
-        <h3>Why an exchange beats a broker</h3>
-        <p>Every broker in this market together is worth about $31.8bn. The two exchanges that actually <em>print a price</em>, CME and ICE, are worth about $184bn.<span class="cite">9</span> Matching is useful; pricing becomes infrastructure everyone else references.</p>
-      </div>
-    </div>
+<!-- ========================================================= 06 Market -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">06</span><span class="s">The market</span><span class="bar"></span></div>
+  <h2>$194 billion changes hands. Nobody takes a cut.</h2>
+  <div class="chain" style="margin-top:18px">
+    <div class="ch"><span class="k">Chips sold</span><span class="v">$193.7B</span><p>What NVIDIA sold in a year<span class="cite">2</span> &mdash; and every hour of it gets resold privately.</p></div>
+    <div class="ch"><span class="k">Rented out as</span><span class="v">$21B</span><p>Guided for 2026 by just two chip-rental companies.</p></div>
+    <div class="ch"><span class="k">Turned into</span><span class="v">$72B</span><p>Annual revenue at just two AI model companies.</p></div>
+    <div class="ch out"><span class="k">Exascale&rsquo;s cut at 1.8%</span><span class="v">$3.5B</span><p>The fees sitting under that flow today, uncollected, because no exchange exists.</p></div>
   </div>
-</section>
+  <h3 style="margin-top:20px">What other marketplaces keep, for comparison</h3>
+  <div class="bars" style="margin-top:10px">
+    <div class="bl us"><span class="nm">Exascale &middot; chip cloud</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">30%</span></div>
+    <div class="bl"><span class="nm">Uber</span><span class="track"><span class="fill" style="width:83%"></span></span><span class="val">~25%</span></div>
+    <div class="bl"><span class="nm">Airbnb</span><span class="track"><span class="fill" style="width:43%"></span></span><span class="val">~13%</span></div>
+    <div class="bl"><span class="nm">Amazon marketplace</span><span class="track"><span class="fill" style="width:40%"></span></span><span class="val">~12%</span></div>
+    <div class="bl"><span class="nm">Etsy</span><span class="track"><span class="fill" style="width:22%"></span></span><span class="val">6.5%</span></div>
+    <div class="bl"><span class="nm">Stripe</span><span class="track"><span class="fill" style="width:9.7%"></span></span><span class="val">2.9%</span></div>
+    <div class="bl us"><span class="nm">Exascale &middot; the exchange</span><span class="track"><span class="fill" style="width:6%"></span></span><span class="val">1.8%</span></div>
+    <div class="bl"><span class="nm">Adyen</span><span class="track"><span class="fill" style="width:3%"></span></span><span class="val">~0.9%</span></div>
+  </div>
+  <p class="plain"><b>The point of that chart</b>
+    Exascale&rsquo;s exchange fee is the <em>smallest</em> on the list &mdash; cheaper than Stripe,
+    barely above Adyen. That is deliberate. A low fee is what persuades people to trade on your venue,
+    and the exchange is still expected to be about two-thirds of all revenue by year five, because it
+    is charged on an enormous number.</p>
+</div></section>
 
-<!-- ============================================================ 08 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">08</span><span class="s">Margins</span><span class="bar"></span></div>
-    <h2>Low cost, high margin &mdash; and exactly why.</h2>
-    <p style="margin-top:14px;max-width:78ch">
-      The plan shows a <strong>96% gross margin</strong> and profitability in year one, at a
-      <strong>71% operating margin</strong> rising to <strong>86%</strong> by year five.<span class="own">OURS</span>
-      The reason is simple and real: <strong>Exascale does not own the chips.</strong> The expensive,
-      depreciating hardware belongs to the data centres. Once the software exists, the ten-thousandth
-      trade costs a fraction of a penny. No extra chip to buy, no extra warehouse to heat.
-    </p>
-    <div class="flag" style="margin-top:24px">
-      <span class="t">Two questions to put to the founders before wiring anything</span>
-      <p style="margin-bottom:12px"><strong>1. The 66 researchers are unsalaried.</strong> The full deck states in a footnote that its 66 PhD and MSc researchers take no salary, and that paying them would add <strong>about $16m a year</strong>. On year-one revenue of $36m, that moves operating profit from roughly $26m to roughly $10m &mdash; still profitable, but a materially different company. Ask how long the arrangement holds.</p>
-      <p><strong>2. Overheads look thin at scale.</strong> The plan carries $3.3m of general and administrative cost in year five, against $6.29bn of revenue, a regulated exchange, three offices and 1,373 sales staff. Sales costs are budgeted separately, so this is a definitional choice rather than a clear error &mdash; but it deserves a direct question.</p>
-    </div>
-    <div class="stats">
-      <div><span class="v jade">96%</span><span class="l">Gross margin, Y1&ndash;Y5<span class="own">OURS</span></span></div>
-      <div><span class="v jade">71%</span><span class="l">Operating margin, year one<span class="own">OURS</span></span></div>
-      <div><span class="v">1 : 1,000</span><span class="l">Control computers per chip managed</span></div>
-      <div><span class="v">$0</span><span class="l">Spent on hardware</span></div>
-    </div>
+<!-- ========================================================= 07 Solution -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">07</span><span class="s">The solution</span><span class="bar"></span></div>
+  <h2>One place to buy. One place to sell. One price between them.</h2>
+  <p class="sub">Three ways of measuring the same shortage. Each compares what the world wants against what the world can actually deliver.</p>
+  <div class="cards c3" style="margin-top:20px">
+    <div class="card"><span class="k">Measured in growth</span><span class="big">18&times;</span><span class="w">Demand grows faster than supply</span>
+      <p>AI demand grew fivefold in a year. The inventory of the four largest chip-rental markets grew 33%.</p></div>
+    <div class="card"><span class="k">Measured in money</span><span class="big">3.7&times;</span><span class="w">Wanted per dollar actually built</span>
+      <p>$725 billion was committed to buying capacity in 2026.<span class="cite">1</span> $193.7 billion of chips were delivered against it.<span class="cite">2</span></p></div>
+    <div class="card"><span class="k">Measured in buildings</span><span class="big">&gt;99.9%</span><span class="w">Taken before it opened</span>
+      <p>1,951 megawatts were built in the top four US markets in a year. Left available to rent in Dallas: 1.4 megawatts.<span class="cite">4</span></p></div>
   </div>
-</section>
+  <div class="chain" style="margin-top:18px">
+    <div class="ch"><span class="k">Money flows this way &rarr;</span><span class="v" style="font-size:17px">AI companies</span><p>Pay for computing power. Today they phone round and haggle.</p></div>
+    <div class="ch out"><span class="k">The venue</span><span class="v" style="font-size:17px">Exascale</span><p>Matches the two, publishes the price, takes a small cut of each trade.</p></div>
+    <div class="ch"><span class="k">&larr; Capacity flows this way</span><span class="v" style="font-size:17px">Data centres</span><p>Own chips sitting idle. Today they have no way to sell an idle Tuesday.</p></div>
+  </div>
+  <p class="plain"><b>In plain terms</b>
+    Exascale never buys a chip and never owns a building. It sits in the middle, like a stock exchange
+    sits between buyers and sellers of shares &mdash; and like a stock exchange, it makes money whether
+    the price goes up or down, as long as people keep trading.</p>
+</div></section>
 
-<!-- ============================================================ 09 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">09</span><span class="s">The plan</span><span class="bar"></span></div>
-    <h2>The five-year plan, in one table.</h2>
-    <div class="tw" style="margin-top:24px">
-      <table>
-        <thead><tr><th>Year</th><th class="r">Revenue</th><th class="r">Operating profit</th><th class="r">Margin</th><th>What it would mean</th></tr></thead>
-        <tbody>
-          <tr><td>Year 1</td><td class="num r hero">$36M</td><td class="num r">$26M</td><td class="num r">71%</td><td>The contracted supply billing for twelve months.</td></tr>
-          <tr><td>Year 2</td><td class="num r hero">$180M</td><td class="num r">$144M</td><td class="num r">80%</td><td>A real business. Profitable and self-funding.</td></tr>
-          <tr><td>Year 3</td><td class="num r hero">$712M</td><td class="num r">$588M</td><td class="num r">83%</td><td>The established venue for this asset.</td></tr>
-          <tr><td>Year 4</td><td class="num r hero">$2.13B</td><td class="num r">$1.81B</td><td class="num r">85%</td><td>Infrastructure. Others price against it.</td></tr>
-          <tr class="accent"><td>Year 5</td><td class="num r hero">$6.29B</td><td class="num r">$5.44B</td><td class="num r">86%</td><td>The place the price of compute is set.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="tnote">
-      Exascale's management plan.<span class="own">OURS</span> Not booked, not audited. A 173-fold increase over five years,
-      against a compute base measured to be growing about 3.3&times; a year. Year-five revenue rests
-      on $711bn of computing power crossing the book in one year.
-    </p>
-    <div class="stats">
-      <div><span class="v jade">173&times;</span><span class="l">Revenue ramp, Y1 to Y5<span class="own">OURS</span></span></div>
-      <div><span class="v">1.50% &rarr; 0.60%</span><span class="l">Exchange fee, compressed<span class="own">OURS</span></span></div>
-      <div><span class="v">$711B</span><span class="l">Notional cleared in Y5<span class="own">OURS</span></span></div>
-      <div><span class="v">0</span><span class="l">Dollars booked to date</span></div>
-    </div>
+<!-- ========================================================= 08 Exchange -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">08</span><span class="s">The exchange</span><span class="bar"></span></div>
+  <h2>Labs bid. Data centres offer. We clear it and keep a slice.</h2>
+  <p class="sub">This is the product itself: a screen where buyers post what they will pay, sellers post what they will accept, and the two are matched automatically at the best available price.</p>
+  <figure style="margin-top:18px">
+    <svg viewBox="0 0 1148 210" role="img" aria-label="Diagram: buyers post bids on the left, sellers post offers on the right, the exchange matches them in the middle and settles the same day.">
+      <!-- buy side -->
+      <rect x="0" y="34" width="300" height="120" rx="4" fill="#111716" stroke="rgba(228,240,236,.12)"></rect>
+      <text class="s-label" x="20" y="60">WHAT BUYERS WILL PAY</text>
+      <text class="s-value" x="20" y="90" fill="#19AD90">$2.1430</text>
+      <text class="s-label" x="20" y="112">$2.1420 &middot; $2.1410 &middot; $2.1400</text>
+      <text class="s-label" x="20" y="134">4,623 hours wanted</text>
+      <!-- sell side -->
+      <rect x="848" y="34" width="300" height="120" rx="4" fill="#111716" stroke="rgba(228,240,236,.12)"></rect>
+      <text class="s-label" x="1128" y="60" text-anchor="end">WHAT SELLERS WILL ACCEPT</text>
+      <text class="s-value" x="1128" y="90" text-anchor="end" fill="#C57742">$2.1450</text>
+      <text class="s-label" x="1128" y="112" text-anchor="end">$2.1460 &middot; $2.1470 &middot; $2.1480</text>
+      <text class="s-label" x="1128" y="134" text-anchor="end">4,128 hours offered</text>
+      <!-- middle -->
+      <rect x="404" y="18" width="340" height="152" rx="4" fill="rgba(25,173,144,.13)" stroke="#19AD90"></rect>
+      <text class="s-label" x="574" y="44" text-anchor="middle" fill="#19AD90">THE MATCH</text>
+      <text x="574" y="86" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="34" fill="#E8F0ED">$2.1440</text>
+      <text class="s-label" x="574" y="112" text-anchor="middle">the published price</text>
+      <text class="s-label" x="574" y="140" text-anchor="middle">Exascale keeps 1.8% &middot; $38.59 on 1,000 hours</text>
+      <!-- arrows -->
+      <path d="M304,94 L396,94" stroke="#19AD90" stroke-width="2"></path>
+      <path d="M396,94 l-9,-5 l0,10 Z" fill="#19AD90"></path>
+      <path d="M844,94 L752,94" stroke="#C57742" stroke-width="2"></path>
+      <path d="M752,94 l9,-5 l0,10 Z" fill="#C57742"></path>
+      <!-- pipeline -->
+      <text class="s-label" x="0" y="196">ORDER ~2ms</text>
+      <text class="s-label" x="230" y="196">MATCH &lt;1s</text>
+      <text class="s-label" x="460" y="196">CHIPS RUNNING 30&ndash;90s</text>
+      <text class="s-label" x="790" y="196">METERED EVERY SECOND</text>
+      <text class="s-label" x="1148" y="196" text-anchor="end">PAID SAME DAY</text>
+    </svg>
+    <figcaption>The gap between the best bid and the best offer is about 9 hundredths of one percent. On the open market for the same chip, the gap between the cheapest and dearest seller is 4.7&times;. Closing that is what an exchange does. <strong>Illustrative screen &mdash; no trade has crossed this book yet.</strong></figcaption>
+  </figure>
+  <div class="stats">
+    <div><span class="v">$193.7B</span><span class="l">Traded privately each year<span class="cite">2</span></span></div>
+    <div><span class="v">4.7&times;</span><span class="l">Price gap it closes<span class="cite">5</span></span></div>
+    <div><span class="v jade">1.8%</span><span class="l">Kept on every trade</span></div>
+    <div><span class="v jade">$3.5B</span><span class="l">Fee pool sitting under it</span></div>
+    <div><span class="v">0</span><span class="l">Trades cleared to date</span></div>
   </div>
-</section>
+</div></section>
 
-<!-- ============================================================ 10 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">10</span><span class="s">The return</span><span class="bar"></span></div>
-    <h2>What $5 million could become.</h2>
-    <p style="margin-top:14px;max-width:78ch">
-      Three steps. The plan gives year-five revenue of $6.29bn. AI infrastructure changes hands at
-      roughly 20&ndash;30 times revenue; 25 times gives a company worth about <strong>$157bn</strong>.
-      A $5m cheque buys about 5%, diluted to roughly <strong>3.6%</strong> across three later
-      fundraisings &mdash; the same multiple per dollar as the full deck's $10m case.
-    </p>
-    <div class="tw" style="margin-top:22px">
-      <table>
-        <thead><tr><th>If it exits&hellip;</th><th class="r">At 20&times; revenue</th><th class="r">At 25&times; revenue</th><th class="r">At 30&times; revenue</th><th class="r">Your $5m becomes</th></tr></thead>
-        <tbody>
-          <tr><td>Year 3 &middot; $712M revenue</td><td class="num r">104&times;</td><td class="num r">130&times;</td><td class="num r">156&times;</td><td class="num r">$520M &ndash; $780M</td></tr>
-          <tr><td>Year 4 &middot; $2.13B revenue</td><td class="num r">311&times;</td><td class="num r">389&times;</td><td class="num r">467&times;</td><td class="num r">$1.6B &ndash; $2.3B</td></tr>
-          <tr class="accent"><td>Year 5 &middot; $6.29B revenue</td><td class="num r">918&times;</td><td class="num r hero">1,147&times;</td><td class="num r">1,377&times;</td><td class="num r">$4.6B &ndash; $6.9B</td></tr>
-        </tbody>
-      </table>
+<!-- ========================================================= 09 AI Platform & GPU Cloud -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">09</span><span class="s">The cloud &amp; the models</span><span class="bar"></span></div>
+  <h2>Every model behind one account. Every building behind one switch.</h2>
+  <div class="cards c2" style="margin-top:20px">
+    <div class="card" style="padding:22px 24px">
+      <span class="k">For the customer who wants finished AI</span>
+      <span class="w" style="font-size:18px">One account, 500+ models</span>
+      <p style="font-size:14.5px">A company that wants to use artificial intelligence normally signs up with each provider
+      separately, learns each one&rsquo;s system, and gets a separate bill. Exascale puts more than five hundred
+      models behind a single account and a single bill, and runs them on capacity it is already metering &mdash;
+      so the difference between the retail price and the cost underneath belongs to Exascale.</p>
     </div>
-    <div class="flag" style="margin-top:20px">
-      <span class="t">The honest reading of that grid</span>
-      <p>Every cell is a projection multiplied by an assumption and divided by a second assumption. The arithmetic is sound. But arithmetic is not the question &mdash; <strong>all the risk sits in the first number: $6.29bn of revenue in year five, from a company that has not cleared a single trade.</strong> Note too that the grid has no zero in it. The next slide adds the missing rung.</p>
+    <div class="card" style="padding:22px 24px">
+      <span class="k">For the customer who wants the raw chips</span>
+      <span class="w" style="font-size:18px">Thirteen buildings, one switch</span>
+      <p style="font-size:14.5px">A customer who wants the machines themselves gets them in thirty to ninety seconds, across
+      thirteen facilities on two continents, without knowing or caring which company owns the racks. They are
+      billed by the second. It behaves like one enormous computer that happens to be spread over two continents.</p>
     </div>
   </div>
-</section>
+  <div class="stats">
+    <div><span class="v">$72B</span><span class="l">Paid to two AI labs a year</span></div>
+    <div><span class="v">&times;7</span><span class="l">Demand growth in one year<span class="cite">3</span></span></div>
+    <div><span class="v jade">500+</span><span class="l">Models behind one account</span></div>
+    <div><span class="v">30&ndash;90s</span><span class="l">To first chip running</span></div>
+    <div><span class="v">13</span><span class="l">Facilities, one bill</span></div>
+  </div>
+  <p class="plain"><b>Why this matters to the exchange</b>
+    These two products are not a side business. They are what generates the flow the exchange prices.
+    You cannot run a market in something nobody is buying through you &mdash; so Exascale sells the
+    thing first, and prices it second.</p>
+</div></section>
 
-<!-- ============================================================ 11 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">11</span><span class="s">What has to be true</span><span class="bar"></span></div>
-    <h2>Read this ladder from the bottom up.</h2>
-    <p style="margin-top:12px;max-width:74ch">Each rung is not a prediction. It is a condition &mdash; what the world would have to do for that outcome to happen.</p>
-    <div class="ladder" style="margin-top:20px">
-      <div class="rung zero">
-        <span class="m">0&times;</span><span class="nm">The book never gets liquid</span>
-        <p class="cd">The LOIs do not convert, or the licences do not arrive, or traders never appear in enough numbers for a real price to form. <strong>This is the most likely single outcome</strong> for any new exchange, and it is absent from the company's own grid.</p>
-      </div>
-      <div class="rung">
-        <span class="m">~104&times;</span><span class="nm">A real but early exit</span>
-        <p class="cd">Year three, $712m of revenue, sold at the low end. Requires the LOIs to convert and the exchange to work &mdash; but not to have won the market.</p>
-      </div>
-      <div class="rung">
-        <span class="m">~389&times;</span><span class="nm">The established venue</span>
-        <p class="cd">Year four, $2.13bn of revenue at 25 times. Requires Exascale to be where a meaningful share of the world's computing power is priced.</p>
-      </div>
-      <div class="rung top">
-        <span class="m">~1,147&times;</span><span class="nm">Exascale becomes the CME of compute</span>
-        <p class="cd">Year five, $6.29bn of revenue, valued at $157bn &mdash; more than CME and ICE combined today, the two largest commodity exchanges on earth, built over forty years.<span class="cite">9</span> It needs <strong>$711bn of computing power crossing the book in a year</strong>, 3.7 times the entire world market for AI chips. The company's answer is that financial contracts trade at a multiple of the goods behind them &mdash; about ten paper barrels per real barrel of oil &mdash; and four per physical dollar is conservative by that standard. A fair argument, and the single largest assumption in the case.</p>
-      </div>
-    </div>
+<!-- ========================================================= 10 Substrate -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">10</span><span class="s">The meter</span><span class="bar"></span></div>
+  <h2>We meter someone else&rsquo;s racks and pay them by the second.</h2>
+  <p class="sub">This is the least glamorous product and the one everything else depends on. It is the reason Exascale can sell capacity it does not own.</p>
+  <figure style="margin-top:18px">
+    <svg viewBox="0 0 1148 168" role="img" aria-label="Diagram: a data centre's idle racks are metered by Exascale, sold to a customer, and the operator is paid 70 percent automatically.">
+      <rect x="0" y="26" width="252" height="104" rx="4" fill="#111716" stroke="rgba(228,240,236,.12)"></rect>
+      <text class="s-label" x="18" y="52">A DATA CENTRE</text>
+      <text class="s-name" x="18" y="78">Idle racks</text>
+      <text class="s-label" x="18" y="102">Earning nothing this week.</text>
+      <path d="M256,78 L316,78" stroke="#19AD90" stroke-width="2"></path><path d="M316,78 l-9,-5 l0,10 Z" fill="#19AD90"></path>
+      <rect x="324" y="26" width="252" height="104" rx="4" fill="rgba(25,173,144,.13)" stroke="#19AD90"></rect>
+      <text class="s-label" x="342" y="52" fill="#19AD90">EXASCALE&rsquo;S METER</text>
+      <text class="s-name" x="342" y="78">Counts every second</text>
+      <text class="s-label" x="342" y="102">Free to the operator. Proves the chip is real.</text>
+      <path d="M580,78 L640,78" stroke="#19AD90" stroke-width="2"></path><path d="M640,78 l-9,-5 l0,10 Z" fill="#19AD90"></path>
+      <rect x="648" y="26" width="252" height="104" rx="4" fill="#111716" stroke="rgba(228,240,236,.12)"></rect>
+      <text class="s-label" x="666" y="52">A BUYER, ANYWHERE</text>
+      <text class="s-name" x="666" y="78">Rents it by the hour</text>
+      <text class="s-label" x="666" y="102">Never knows whose rack it is.</text>
+      <path d="M904,78 L964,78" stroke="#C57742" stroke-width="2"></path><path d="M964,78 l-9,-5 l0,10 Z" fill="#C57742"></path>
+      <rect x="972" y="26" width="176" height="104" rx="4" fill="#111716" stroke="rgba(228,240,236,.12)"></rect>
+      <text class="s-label" x="990" y="52" fill="#C57742">PAID SAME DAY</text>
+      <text x="990" y="86" font-family="IBM Plex Mono,monospace" font-size="30" fill="#E8F0ED">70%</text>
+      <text class="s-label" x="990" y="110">to the operator</text>
+      <text class="s-label" x="0" y="158">The operator keeps 70% and stops having to find customers. Exascale keeps 30% and never buys a chip.</text>
+    </svg>
+    <figcaption>The meter is what makes an idle Tuesday sellable. Without it, a buyer has no way to verify the capacity is real, and a seller has no way to be paid for a stranger&rsquo;s usage.</figcaption>
+  </figure>
+  <div class="stats">
+    <div><span class="v jade">70%</span><span class="l">What the operator keeps</span></div>
+    <div><span class="v">6,228</span><span class="l">Chips metered per second<span class="own">OURS</span></span></div>
+    <div><span class="v">110MW+</span><span class="l">Electricity contracted<span class="own">OURS</span></span></div>
+    <div><span class="v">1,951 MW</span><span class="l">Built in a year in the top 4 US markets<span class="cite">4</span></span></div>
+    <div><span class="v">1.4 MW</span><span class="l">Left to rent in Dallas<span class="cite">4</span></span></div>
   </div>
-</section>
+</div></section>
 
-<!-- ============================================================ 12 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">12</span><span class="s">Risks</span><span class="bar"></span></div>
-    <h2>What could go wrong, stated plainly.</h2>
-    <p style="margin-top:12px;max-width:74ch">A deck without this slide is a sales brochure. These are the things that would actually cost you your money.</p>
-    <div class="risks" style="margin-top:20px">
-      <div class="rk"><div class="h"><span class="t">Letters of intent are not orders</span><span class="s s-hi">Most serious</span></div>
-        <p>The $1.34bn centrepiece is non-binding. Conversion rates vary enormously and there is no track record to judge against. Ask what share of the 214 accounts has converted, and on what terms.</p></div>
-      <div class="rk"><div class="h"><span class="t">Nobody trades on an empty market</span><span class="s s-hi">Most serious</span></div>
-        <p>An exchange with no participants has no price, and without a price there is no reason to join. Every venue in history has faced this; most failed it. Nothing has crossed this book yet.</p></div>
-      <div class="rk"><div class="h"><span class="t">The licences are not in hand</span><span class="s s-hi">Most serious</span></div>
-        <p>$1m of the raise is for exchange registration, money-transmitter licences and a client-money bond. Until that lands the venue cannot legally clear at scale, and regulatory timetables slip.</p></div>
-      <div class="rk"><div class="h"><span class="t">The cost base depends on unpaid researchers</span><span class="s s-md">Material</span></div>
-        <p>66 of 81 staff take no salary. Paying them would cost about $16m a year and would materially change the margin story that makes this a low-cost, high-profit business.</p></div>
-      <div class="rk"><div class="h"><span class="t">The price gap could close on its own</span><span class="s s-md">Material</span></div>
-        <p>The 4.7&times; spread is the reason to exist. If supply catches up and prices converge without an exchange, the need for one weakens considerably.</p></div>
-      <div class="rk"><div class="h"><span class="t">Three businesses, one balance sheet</span><span class="s s-md">Material</span></div>
-        <p>The cloud and the model platform are not exchange economics &mdash; they carry operational risk a pure venue does not. The plan assumes all three work at once.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ 13 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">13</span><span class="s">The ask</span><span class="bar"></span></div>
-    <h2>$5 million into a $10 million round.</h2>
-    <p style="margin-top:14px;max-width:78ch">
-      The round is $10m, of which <strong>$1.72m is already wired</strong>, leaving $8.28m. A $5m
-      cheque would be the majority of what remains.<span class="own">OURS</span>
-    </p>
-    <div class="tw" style="margin-top:22px">
-      <table>
-        <thead><tr><th>Where it goes</th><th class="r">Amount</th><th>For what</th></tr></thead>
-        <tbody>
-          <tr><td class="hero">Sales &amp; liquidity</td><td class="num r">$5.7M</td><td>16 people across supply, demand and liquidity partnerships &mdash; the team that turns letters of intent into revenue.</td></tr>
-          <tr><td class="hero">Product &amp; engineering</td><td class="num r">$2.4M</td><td>Cloud, platform and exchange. Retains lead engineers on payroll.</td></tr>
-          <tr><td class="hero">Compliance &amp; legal</td><td class="num r">$1.0M</td><td>Exchange licensing, client-money permissions, counsel. The permission to clear at scale.</td></tr>
-          <tr><td class="hero">General &amp; administrative</td><td class="num r">$0.9M</td><td>Leadership, three offices, insurance, audit, recruiting.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="cards c2" style="margin-top:20px">
-      <div class="card">
-        <h3>The one milestone that decides this</h3>
-        <p>Not revenue, not headcount, not another letter of intent. It is <strong>the first month in which a meaningful volume of computing power changes hands on the exchange at a price the exchange itself discovered</strong>. Everything before that is preparation; everything after is arithmetic.</p>
+<!-- ========================================================= 11 Product -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">11</span><span class="s">The products</span><span class="bar"></span></div>
+  <h2>One account, four products, three ways of being paid.</h2>
+  <div class="figs" style="margin-top:18px;grid-template-columns:1fr 1fr;gap:22px">
+    <div>
+      <h3>Renting chips by the hour</h3>
+      <div class="tw" style="margin-top:9px">
+        <table>
+          <thead><tr><th>Chip</th><th>What it is good at</th><th class="r">Per hour</th></tr></thead>
+          <tbody>
+            <tr><td class="hero">H100</td><td>The workhorse. Deepest market.</td><td class="num r">$2.14</td></tr>
+            <tr><td class="hero">H200</td><td>More memory, for longer tasks.</td><td class="num r">$2.98</td></tr>
+            <tr><td class="hero">B200</td><td>Newest generation, limited supply.</td><td class="num r">$6.80</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="card">
-        <h3>Three questions to ask</h3>
-        <p><strong>1.</strong> How many of the 214 accounts have converted from letter of intent to signed order, and for how much?<br>
-        <strong>2.</strong> When do the exchange licences realistically land, and what happens if they are a year late?<br>
-        <strong>3.</strong> How long will 66 researchers keep working without salary?</p>
+      <p class="tnote">Exascale&rsquo;s published rates.<span class="own">OURS</span> The same chip elsewhere runs $1.49 to $6.98.<span class="cite">5</span></p>
+    </div>
+    <div>
+      <h3>Buying finished AI by the word</h3>
+      <div class="tw" style="margin-top:9px">
+        <table>
+          <thead><tr><th>Model</th><th class="r">In</th><th class="r">Out</th></tr></thead>
+          <tbody>
+            <tr><td class="hero">DeepSeek V3</td><td class="num r">$0.27</td><td class="num r">$1.10</td></tr>
+            <tr><td class="hero">Llama 3.3 70B</td><td class="num r">$0.23</td><td class="num r">$0.40</td></tr>
+            <tr><td class="hero">Qwen2.5 72B</td><td class="num r">$0.35</td><td class="num r">$0.40</td></tr>
+          </tbody>
+        </table>
       </div>
+      <p class="tnote">Dollars per million words in and out. Customers who do not want to think about chips at all buy here instead.</p>
     </div>
   </div>
-</section>
-
-<!-- ============================================================ 14 -->
-<section class="slide">
-  <div class="stage">
-    <div class="sec"><span class="n">14</span><span class="s">Sources</span><span class="bar"></span></div>
-    <h2>Every outside figure, and who said it.</h2>
-    <p style="margin-top:12px;max-width:80ch">
-      Anything marked <span class="own">OURS</span> is Exascale's own assertion and is not
-      independently checkable &mdash; verify it in the data room. Everything below is an outside
-      party you can go and read.
-    </p>
-    <ol class="srcs">
-      <li><span class="n">01</span><div><p class="t">2026 capital expenditure guidance &mdash; Microsoft, Amazon, Google, Meta</p><p class="m">Company guidance &middot; 2026 &middot; $725bn committed, up 77% on $410bn. A sum of four separate guidance figures, not one reported number.</p></div></li>
-      <li><span class="n">02</span><div><p class="t">NVIDIA Q4 FY2026 results</p><p class="m">NVIDIA &middot; 2026 &middot; $193.7bn of data-centre revenue, up 68% &mdash; the silicon actually delivered.</p></div></li>
-      <li><span class="n">03</span><div><p class="t">Google I/O keynote</p><p class="m">Google &middot; May 2026 &middot; AI requests handled rose from 480 trillion to 3.2 quadrillion a month in a year.</p></div></li>
-      <li><span class="n">04</span><div><p class="t">North America Data Center Trends</p><p class="m">CBRE &middot; Q1 2026 &middot; Deliverable capacity grew 36%. Vacancy 1.4% in primary markets, 0.3% in Northern Virginia.</p></div></li>
-      <li><span class="n">05</span><div><p class="t">H100 provider survey</p><p class="m">IntuitionLabs &middot; 2026 &middot; $1.49 to $6.98 per GPU-hour across 15+ providers &mdash; 4.7&times; for identical silicon. Quoted rates only.</p></div></li>
-      <li><span class="n">06</span><div><p class="t">Queued Up &mdash; interconnection queue analysis</p><p class="m">Lawrence Berkeley National Laboratory &middot; 2026 &middot; ~2,600 GW waiting in US grid queues; 5&ndash;10 years to energise.</p></div></li>
-      <li><span class="n">07</span><div><p class="t">Construction workforce analysis</p><p class="m">Information Technology &amp; Innovation Foundation &middot; January 2026 &middot; US trades short ~439,000 workers, ~300,000 electricians.</p></div></li>
-      <li><span class="n">08</span><div><p class="t">H100 one-year rental price index</p><p class="m">SemiAnalysis &middot; 2026 &middot; Contract price rose 38% between October 2025 and March 2026, after a 79% fall.</p></div></li>
-      <li><span class="n">09</span><div><p class="t">Market capitalisations &mdash; CME Group and Intercontinental Exchange</p><p class="m">Public market data &middot; 2026 &middot; CME ~$100bn, ICE ~$84bn &mdash; ~$184bn for the two venues that print a price, against ~$31.8bn for every broker that merely matches.</p></div></li>
-    </ol>
-    <p class="tnote" style="margin-top:auto">
-      Not an offer to sell or a solicitation to buy securities, and not investment advice. All
-      projections are Exascale's management plan applied to assumptions, are neither booked nor
-      audited, and carry no assurance. An investment of this kind can result in the loss of the
-      entire amount invested. Figures as of August 2026.
-    </p>
+  <div class="cards c4" style="margin-top:16px">
+    <div class="card"><span class="k">Product 1</span><span class="w">The meter</span><p>Makes other people&rsquo;s racks sellable. Earns nothing directly.</p></div>
+    <div class="card"><span class="k">Product 2</span><span class="w">The chip cloud</span><p>Rents hours. Exascale keeps 30%.</p></div>
+    <div class="card"><span class="k">Product 3</span><span class="w">The model service</span><p>Sells finished AI at a markup on cost.</p></div>
+    <div class="card"><span class="k">Product 4</span><span class="w">The exchange</span><p>Prices everything. Keeps 1.8% a trade.</p></div>
   </div>
-</section>
+</div></section>
+
+<!-- ========================================================= 12 Unit of Account -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">12</span><span class="s">What actually gets traded</span><span class="bar"></span></div>
+  <h2>One exchange, two credits, three sides.</h2>
+  <p class="sub">A technical slide in the deck, and the idea underneath it is old and simple: you cannot run a market in promises from one particular supplier. So you standardise the promise, and trade the standard.</p>
+  <div class="cards c3" style="margin-top:18px">
+    <div class="card"><span class="k">01 &middot; The claim is what trades</span>
+      <p style="font-size:14px">A credit is a claim on <em>one hour of a class of chip</em> &mdash; not on a named supplier&rsquo;s
+      particular machine. This is exactly how metal exchanges work: you trade a warrant for a tonne of copper, not
+      a specific pallet in a specific shed. Interchangeability is what creates a deep market.</p></div>
+    <div class="card"><span class="k">02 &middot; Two credits, one wallet</span>
+      <p style="font-size:14px">A buyer funds one balance in dollars and decides later whether to spend it on raw chip hours
+      or on finished AI. Suppliers are paid in dollars. Because there is one settlement currency behind both, the
+      whole thing is one accounting system rather than two.</p></div>
+    <div class="card"><span class="k">03 &middot; The rate between them</span>
+      <p style="font-size:14px">Finished AI is just chip hours already used. So the ratio between the two prices is a number
+      every AI business is exposed to and nobody publishes. DeepSeek disclosed its own: $87,072 of chips a day
+      produced $562,027 of output &mdash; <strong>6.5&times;</strong>. Exascale would be where that rate is quoted.</p></div>
+  </div>
+  <div class="stats">
+    <div><span class="v jade">2</span><span class="l">Credits on one balance</span></div>
+    <div><span class="v jade">6.5&times;</span><span class="l">Published rate between them</span></div>
+    <div><span class="v">1.8%</span><span class="l">Taken on either, rebated to sellers</span></div>
+    <div><span class="v">3</span><span class="l">Sides. Two is a marketplace; three is an exchange</span></div>
+    <div><span class="v">$0</span><span class="l">Of customer money on the balance sheet</span></div>
+  </div>
+  <p class="plain"><b>The third side</b>
+    A marketplace has two sides: buyers and sellers. An exchange has a third &mdash; traders, who
+    never want the chips at all and are there to profit from price movement. They are what makes a
+    market deep enough that everyone else gets a fair price.</p>
+</div></section>
+
+<!-- ========================================================= 13 Supply -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">13</span><span class="s">Supply</span><span class="bar"></span></div>
+  <h2>$137 million signed. Thirteen buildings, two continents.</h2>
+  <figure style="margin-top:18px">
+    <svg viewBox="0 0 1148 200" role="img" aria-label="Diagram: thirteen contracted facilities across four US regions and Europe, totalling 110 megawatts and 6,228 chips, growing to 52,400 chip equivalents by 2027.">
+      <line x1="0" y1="120" x2="1148" y2="120" stroke="rgba(228,240,236,.12)"></line>
+      <g>
+        <circle cx="120" cy="120" r="9" fill="#19AD90"></circle>
+        <text class="s-name" x="120" y="100" text-anchor="middle">Texas</text>
+        <text class="s-label" x="120" y="146" text-anchor="middle">live</text>
+      </g>
+      <g>
+        <circle cx="330" cy="120" r="11" fill="#19AD90"></circle>
+        <text class="s-name" x="330" y="100" text-anchor="middle">California</text>
+        <text class="s-label" x="330" y="146" text-anchor="middle">Santa Clara &middot; San Jose &middot; Vernon</text>
+      </g>
+      <g>
+        <circle cx="560" cy="120" r="8" fill="#19AD90"></circle>
+        <text class="s-name" x="560" y="100" text-anchor="middle">Virginia</text>
+        <text class="s-label" x="560" y="146" text-anchor="middle">live</text>
+      </g>
+      <g>
+        <circle cx="760" cy="120" r="8" fill="#19AD90"></circle>
+        <text class="s-name" x="760" y="100" text-anchor="middle">N. Carolina</text>
+        <text class="s-label" x="760" y="146" text-anchor="middle">Madison</text>
+      </g>
+      <line x1="880" y1="90" x2="880" y2="150" stroke="rgba(228,240,236,.12)" stroke-dasharray="3 4"></line>
+      <g>
+        <circle cx="1010" cy="120" r="9" fill="#C57742"></circle>
+        <text class="s-name" x="1010" y="100" text-anchor="middle">Europe</text>
+        <text class="s-label" x="1010" y="146" text-anchor="middle">live</text>
+      </g>
+      <text class="s-label" x="0" y="30">UNITED STATES &middot; 4 REGIONS</text>
+      <text class="s-label" x="1148" y="30" text-anchor="end">EUROPE</text>
+      <text class="s-label" x="0" y="188">13 facilities &middot; 8 regions &middot; 110 megawatts of contracted electricity &middot; 6,228 chips metered today</text>
+    </svg>
+    <figcaption>Circle size is roughly proportional to the facilities in each region. Executed contracts are in the data room &mdash; ask to see them.</figcaption>
+  </figure>
+  <div class="stats">
+    <div><span class="v jade">$137M</span><span class="l">Contracted supply<span class="own">OURS</span></span></div>
+    <div><span class="v">13</span><span class="l">Facilities under contract<span class="own">OURS</span></span></div>
+    <div><span class="v">6,228</span><span class="l">Chips metered today<span class="own">OURS</span></span></div>
+    <div><span class="v">110MW+</span><span class="l">Electricity contracted<span class="own">OURS</span></span></div>
+    <div><span class="v sm">52,400</span><span class="l">Chip equivalents planned by 2027<span class="own">OURS</span></span></div>
+  </div>
+</div></section>
+
+<!-- ========================================================= 14 Demand -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">14</span><span class="s">Demand</span><span class="bar"></span></div>
+  <h2>$1.34 billion signed up. Two-thirds of it needed within a year.</h2>
+  <div class="figs" style="margin-top:16px;grid-template-columns:1.15fr 1fr;gap:26px">
+    <div>
+      <h3>Where the money wants to come from</h3>
+      <div class="bars" style="margin-top:11px">
+        <div class="bl us"><span class="nm">AI labs &amp; model companies</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">$533M</span></div>
+        <div class="bl"><span class="nm">Cloud platforms</span><span class="track"><span class="fill" style="width:41%"></span></span><span class="val">$221M</span></div>
+        <div class="bl"><span class="nm">Banks &amp; finance</span><span class="track"><span class="fill" style="width:32%"></span></span><span class="val">$169M</span></div>
+        <div class="bl"><span class="nm">Medicine &amp; life sciences</span><span class="track"><span class="fill" style="width:22%"></span></span><span class="val">$117M</span></div>
+        <div class="bl"><span class="nm">Government &amp; defence</span><span class="track"><span class="fill" style="width:20%"></span></span><span class="val">$104M</span></div>
+        <div class="bl"><span class="nm">Car makers</span><span class="track"><span class="fill" style="width:17%"></span></span><span class="val">$91M</span></div>
+        <div class="bl"><span class="nm">Media &amp; entertainment</span><span class="track"><span class="fill" style="width:12%"></span></span><span class="val">$65M</span></div>
+      </div>
+    </div>
+    <div>
+      <h3>What one signed account looks like</h3>
+      <div class="tw" style="margin-top:11px">
+        <table>
+          <thead><tr><th>Who</th><th class="r">Chips</th><th class="r">Budget</th><th>By</th></tr></thead>
+          <tbody>
+            <tr><td>An AI research lab</td><td class="num r">8,192</td><td class="num r">$180M</td><td>Q4 26</td></tr>
+            <tr><td>An AI service company</td><td class="num r">6,144</td><td class="num r">$162M</td><td>Q1 27</td></tr>
+            <tr><td>A large cloud provider</td><td class="num r">4,096</td><td class="num r">$96M</td><td>Rolling</td></tr>
+            <tr><td>A defence contractor</td><td class="num r">2,048</td><td class="num r">$58M</td><td>Q1 27</td></tr>
+            <tr><td>A global bank</td><td class="num r">1,536</td><td class="num r">$38M</td><td>Q1 27</td></tr>
+            <tr class="accent"><td class="hero">All 214 accounts</td><td class="num r">61,376</td><td class="num r">$1.34B</td><td>to 2027</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote">Names withheld pending written permission. Every account has a budget, a named decision-maker and a date.</p>
+    </div>
+  </div>
+  <div class="stats">
+    <div><span class="v jade">214</span><span class="l">Named accounts signed<span class="own">OURS</span></span></div>
+    <div><span class="v jade">$1.34B</span><span class="l">Annual budget under LOI<span class="own">OURS</span></span></div>
+    <div><span class="v">61,376</span><span class="l">Chips requested<span class="own">OURS</span></span></div>
+    <div><span class="v">91%</span><span class="l">Reachable at a named person<span class="own">OURS</span></span></div>
+    <div><span class="v">9.8&times;</span><span class="l">More demand than they can serve</span></div>
+  </div>
+</div></section>
+
+<!-- ========================================================= 15 Buyer Needs -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">15</span><span class="s">What buyers actually want</span><span class="bar"></span></div>
+  <h2>Every evaluation is the same nine questions.</h2>
+  <div class="figs" style="margin-top:18px;grid-template-columns:1fr 1.2fr;gap:26px">
+    <div>
+      <h3>What the money is being spent on</h3>
+      <div class="bars" style="margin-top:11px">
+        <div class="bl us"><span class="nm">Using a trained AI</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">$819M</span></div>
+        <div class="bl"><span class="nm">Training a new one</span><span class="track"><span class="fill" style="width:54%"></span></span><span class="val">$442M</span></div>
+        <div class="bl"><span class="nm">Autonomous agents</span><span class="track"><span class="fill" style="width:4.8%"></span></span><span class="val">$39M</span></div>
+      </div>
+      <p class="tnote" style="margin-top:14px">63% of the money is spent <em>using</em> AI that already exists, not building new AI &mdash; up from a third in 2023. That matters: using AI is a steady, repeating cost, which is exactly the kind of demand an exchange can price.</p>
+      <div class="flag" style="margin-top:14px">
+        <span class="t">An unusually honest line in the original</span>
+        <p>Autonomous agents are the most asked-about item on the list and the least bought. Nobody in the book runs them at scale today. Exascale builds the compatibility and <strong>forecasts no revenue from it.</strong></p>
+      </div>
+    </div>
+    <div>
+      <h3>The questions, and whether they have an answer</h3>
+      <div class="tw" style="margin-top:11px">
+        <table>
+          <thead><tr><th>What a buyer asks</th><th class="r">Status</th></tr></thead>
+          <tbody>
+            <tr><td>Does this fit the tools we already use?</td><td class="num r">Live</td></tr>
+            <tr><td>Can I run any model without rewriting anything?</td><td class="num r">Live</td></tr>
+            <tr><td>Training and running on one system?</td><td class="num r">Live</td></tr>
+            <tr><td>If a chip dies, does my week&rsquo;s work die with it?</td><td class="num r">Beta</td></tr>
+            <tr><td>Does it grow and shrink with my needs?</td><td class="num r">Live</td></tr>
+            <tr><td>Can I overflow into rented capacity when full?</td><td class="num r">Live</td></tr>
+            <tr><td>Can I pool capacity from several providers?</td><td class="num r">Beta</td></tr>
+            <tr><td>What can I actually see and measure?</td><td class="num r">Live</td></tr>
+            <tr><td>Does it fit our agent tools?</td><td class="num r">Roadmap</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote">Six live, two in testing, one not built. Two of the nine decide deals: a chip dying mid-run, and pooling several providers into one.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ========================================================= 16 Liquidity -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">16</span><span class="s">Liquidity</span><span class="bar"></span></div>
+  <h2>Depth is the difference between a noticeboard and a market.</h2>
+  <p class="sub">Liquidity means: can you buy or sell right now, in the size you want, without moving the price against yourself? It is the single property that separates a real exchange from a listings site &mdash; and the hardest thing to create.</p>
+  <figure style="margin-top:16px">
+    <svg viewBox="0 0 1148 176" role="img" aria-label="Diagram: a thin market moves the price a long way on one trade, while a deep market absorbs the same trade with a small move.">
+      <text class="s-label" x="0" y="18">A THIN MARKET &mdash; ONE BIG ORDER MOVES THE PRICE A LONG WAY</text>
+      <g>
+        <rect x="0" y="30" width="70" height="18" fill="#C57742" opacity="0.5"></rect>
+        <rect x="78" y="30" width="40" height="18" fill="#C57742" opacity="0.5"></rect>
+        <rect x="126" y="30" width="24" height="18" fill="#C57742" opacity="0.5"></rect>
+        <rect x="158" y="30" width="14" height="18" fill="#C57742" opacity="0.5"></rect>
+        <path d="M0,58 L400,58" stroke="#C57742" stroke-width="2"></path>
+        <path d="M400,58 l-9,-5 l0,10 Z" fill="#C57742"></path>
+        <text class="s-label" x="412" y="62">your order runs out of sellers, and you pay far more than you meant to</text>
+      </g>
+      <text class="s-label" x="0" y="104">A DEEP MARKET &mdash; THE SAME ORDER BARELY MOVES IT</text>
+      <g>
+        <rect x="0" y="116" width="70" height="18" fill="#19AD90"></rect>
+        <rect x="78" y="116" width="68" height="18" fill="#19AD90"></rect>
+        <rect x="154" y="116" width="66" height="18" fill="#19AD90"></rect>
+        <rect x="228" y="116" width="64" height="18" fill="#19AD90"></rect>
+        <rect x="300" y="116" width="62" height="18" fill="#19AD90"></rect>
+        <rect x="370" y="116" width="60" height="18" fill="#19AD90"></rect>
+        <rect x="438" y="116" width="58" height="18" fill="#19AD90"></rect>
+        <path d="M0,144 L150,144" stroke="#19AD90" stroke-width="2"></path>
+        <path d="M150,144 l-9,-5 l0,10 Z" fill="#19AD90"></path>
+        <text class="s-label" x="162" y="148">the same order is filled almost at the price you saw</text>
+      </g>
+      <text class="s-label" x="1148" y="18" text-anchor="end">EACH BLOCK IS SOMEONE WILLING TO TRADE</text>
+    </svg>
+    <figcaption>This is why an exchange with no participants is worth nothing, and why the same exchange with many participants is worth a great deal. Each new trader makes the venue better for every other trader &mdash; and that is the hardest thing to start and the hardest thing to copy once started.</figcaption>
+  </figure>
+  <p class="plain"><b>Why this is the make-or-break slide</b>
+    Everything else in this deck can be bought with money and time. Liquidity cannot. An exchange with
+    no traders has no price, and with no price there is no reason for the next trader to join. Every
+    venue in history has faced this problem and most have failed it. <strong>Nothing has yet traded on
+    this book.</strong></p>
+</div></section>
+
+<!-- ========================================================= 17 Business Model -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">17</span><span class="s">How the money is made</span><span class="bar"></span></div>
+  <h2>Three tolls on the same hour of computing.</h2>
+  <div class="cards c3" style="margin-top:20px">
+    <div class="card" style="padding:20px 22px">
+      <span class="k">Sell side &middot; the chip cloud</span><span class="big">30%</span>
+      <span class="w">Of what we sell for a data centre</span>
+      <p style="font-size:14px">The operator keeps 70% and pays nothing for the software. They stop having to find their own
+      customers. NVIDIA launched the identical structure in July 2026, committing 210,000 chips to two partners.</p>
+    </div>
+    <div class="card" style="padding:20px 22px">
+      <span class="k">Buy side &middot; the model service</span><span class="big">5&ndash;25&times;</span>
+      <span class="w">Markup on the raw cost</span>
+      <p style="font-size:14px">Finished AI sold at a multiple of the electricity and chip time behind it. Because Exascale is
+      already metering the chips, that spread belongs to it rather than being a toll paid to someone else.</p>
+    </div>
+    <div class="card" style="padding:20px 22px">
+      <span class="k">The venue &middot; the exchange</span><span class="big">1.8%</span>
+      <span class="w">Of every trade that crosses</span>
+      <p style="font-size:14px">Charged to whoever takes a price off the screen; whoever posts one is paid a rebate. That
+      asymmetry is deliberate &mdash; posting prices is what creates a market, so it is rewarded.</p>
+    </div>
+  </div>
+  <p class="plain" style="margin-top:20px"><b>The whole model in one sentence</b>
+    Exascale charges for finished AI, charges for raw chip time, and charges a small percentage on the
+    gap between them &mdash; and only the third one gets bigger as the shortage gets worse. Demand
+    grows in multiples; supply grows in percentages; the spread between them is the product.</p>
+  <div class="stats">
+    <div><span class="v jade">30%</span><span class="l">Of chip-rental revenue</span></div>
+    <div><span class="v jade">5&ndash;25&times;</span><span class="l">Markup on finished AI</span></div>
+    <div><span class="v jade">1.8%</span><span class="l">Of every trade</span></div>
+    <div><span class="v">68%</span><span class="l">Share of revenue from the exchange by Y5<span class="own">OURS</span></span></div>
+    <div><span class="v">$0</span><span class="l">Spent on hardware</span></div>
+  </div>
+</div></section>
+
+<!-- ========================================================= 18 Financials -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">18</span><span class="s">The numbers</span><span class="bar"></span></div>
+  <h2>Profitable in year one, on paper.</h2>
+  <div class="tw" style="margin-top:18px">
+    <table>
+      <thead><tr><th>&nbsp;</th><th class="r">Year 1</th><th class="r">Year 2</th><th class="r">Year 3</th><th class="r">Year 4</th><th class="r">Year 5</th></tr></thead>
+      <tbody>
+        <tr><td>Finished AI sold</td><td class="num r">$14M</td><td class="num r">$45M</td><td class="num r">$146M</td><td class="num r">$401M</td><td class="num r">$1.22B</td></tr>
+        <tr><td>Chip hours sold</td><td class="num r">$9.4M</td><td class="num r">$34M</td><td class="num r">$113M</td><td class="num r">$297M</td><td class="num r">$806M</td></tr>
+        <tr><td>Exchange fees</td><td class="num r">$13M</td><td class="num r">$101M</td><td class="num r">$453M</td><td class="num r">$1.44B</td><td class="num r">$4.27B</td></tr>
+        <tr class="accent"><td class="hero">Total revenue</td><td class="num r hero">$36M</td><td class="num r hero">$180M</td><td class="num r hero">$712M</td><td class="num r hero">$2.13B</td><td class="num r hero">$6.29B</td></tr>
+        <tr><td>Cost of delivering it</td><td class="num r">($1.6M)</td><td class="num r">($7.2M)</td><td class="num r">($26M)</td><td class="num r">($71M)</td><td class="num r">($193M)</td></tr>
+        <tr><td>Sales, research, overheads</td><td class="num r">($9.0M)</td><td class="num r">($29M)</td><td class="num r">($98M)</td><td class="num r">($258M)</td><td class="num r">($663M)</td></tr>
+        <tr><td class="hero">Operating profit</td><td class="num r hero">$26M</td><td class="num r hero">$144M</td><td class="num r hero">$588M</td><td class="num r hero">$1.81B</td><td class="num r hero">$5.44B</td></tr>
+        <tr><td>Profit margin</td><td class="num r">71%</td><td class="num r">80%</td><td class="num r">83%</td><td class="num r">85%</td><td class="num r">86%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">Exascale&rsquo;s management plan.<span class="own">OURS</span> Not booked, not audited. Revenue rises 173-fold over five years. Year-five exchange fees assume $711 billion of computing power crosses the book that year.</p>
+  <div class="flag" style="margin-top:14px">
+    <span class="t">Two questions to put to the founders before wiring anything</span>
+    <p><strong>1. The 66 researchers take no salary.</strong> The original deck says so in a footnote, and that paying them would cost <strong>about $16 million a year</strong>. On year-one revenue of $36 million that moves profit from roughly $26 million to roughly $10 million &mdash; still profitable, but a different company. Ask how long that holds. &nbsp; <strong>2. Overheads look thin.</strong> The plan carries $3.3 million of general overhead in year five against $6.29 billion of revenue, a regulated exchange and three offices.</p>
+  </div>
+</div></section>
+
+<!-- ========================================================= 19 Competition -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">19</span><span class="s">Competition</span><span class="bar"></span></div>
+  <h2>Seventeen companies own a piece. None of them runs a market.</h2>
+  <div class="tw" style="margin-top:18px">
+    <table>
+      <thead><tr><th>Who they are</th><th>What they do</th><th class="r">What they are worth</th><th class="r">Runs a market?</th></tr></thead>
+      <tbody>
+        <tr><td class="hero">The giant clouds</td><td>Amazon, Microsoft, Google. Sell their own racks only.</td><td class="num r">$4.5T</td><td class="num r">No</td></tr>
+        <tr><td class="hero">Data-centre landlords</td><td>Own buildings and power. Do not sell computing.</td><td class="num r">$356B</td><td class="num r">No</td></tr>
+        <tr><td class="hero">Chip-rental companies</td><td>Own chips and rent them. One operator each.</td><td class="num r">$170B</td><td class="num r">No</td></tr>
+        <tr><td class="hero">Newer chip renters</td><td>Rent racks, sell an interface on top.</td><td class="num r">$46B</td><td class="num r">No</td></tr>
+        <tr><td class="hero">AI model services</td><td>One interface over many models. No hardware.</td><td class="num r">$10B</td><td class="num r">No</td></tr>
+        <tr><td class="hero">Brokers</td><td>Match a buyer to a named seller at a private price.</td><td class="num r">$31.8B</td><td class="num r">No</td></tr>
+        <tr class="accent"><td class="hero">Commodity exchanges</td><td>CME and ICE. Print a price &mdash; but for oil and metals, not computing.</td><td class="num r">$184B</td><td class="num r">Yes</td></tr>
+        <tr><td class="hero">Exascale</td><td>Cloud, model service <em>and</em> a market. Owns no racks.</td><td class="num r">&mdash;</td><td class="num r">Yes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="plain" style="margin-top:16px"><b>The one comparison that matters</b>
+    Every broker in this market added together is worth about <strong>$31.8 billion</strong>. The two
+    exchanges that actually publish a price are worth about <strong>$184 billion</strong> &mdash; nearly
+    six times as much, for doing something that looks superficially similar.<span class="cite">9</span>
+    Matching buyers to sellers is a useful service. Publishing the price everyone else references is
+    infrastructure. That gap is the entire argument for this company.</p>
+</div></section>
+
+<!-- ========================================================= 20 Moat -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">20</span><span class="s">Why it would be hard to copy</span><span class="bar"></span></div>
+  <h2>Each product feeds the next one.</h2>
+  <p class="sub">The three products are not three businesses that happen to share an office. Each one creates the conditions the next one needs, which is why they are one company.</p>
+  <figure style="margin-top:16px">
+    <svg viewBox="0 0 1148 190" role="img" aria-label="Diagram: the model service brings customers, the cloud brings supply, and the exchange prices both, with each feeding the next in a loop.">
+      <rect x="0" y="34" width="336" height="106" rx="4" fill="#111716" stroke="rgba(228,240,236,.12)"></rect>
+      <text class="s-label" x="20" y="60" fill="#19AD90">01 &middot; THE MODEL SERVICE</text>
+      <text class="s-name" x="20" y="86">Brings the customers</text>
+      <text class="s-label" x="20" y="110">A developer who wires it in once</text>
+      <text class="s-label" x="20" y="128">does not rewire. Every request</text>
+      <text class="s-label" x="20" y="146">teaches the price of the next.</text>
+      <rect x="406" y="34" width="336" height="106" rx="4" fill="#111716" stroke="rgba(228,240,236,.12)"></rect>
+      <text class="s-label" x="426" y="60" fill="#19AD90">02 &middot; THE CHIP CLOUD</text>
+      <text class="s-name" x="426" y="86">Brings the supply</text>
+      <text class="s-label" x="426" y="110">Free to the operator, who keeps</text>
+      <text class="s-label" x="426" y="128">70% and stops selling their own</text>
+      <text class="s-label" x="426" y="146">capacity. They do not go back.</text>
+      <rect x="812" y="34" width="336" height="106" rx="4" fill="rgba(25,173,144,.13)" stroke="#19AD90"></rect>
+      <text class="s-label" x="832" y="60" fill="#19AD90">03 &middot; THE EXCHANGE</text>
+      <text class="s-name" x="832" y="86">Prices both</text>
+      <text class="s-label" x="832" y="110">Depth attracts depth. A quotable</text>
+      <text class="s-label" x="832" y="128">price makes contracts tradable,</text>
+      <text class="s-label" x="832" y="146">and those pull trade back here.</text>
+      <path d="M340,87 L400,87" stroke="#19AD90" stroke-width="2"></path><path d="M400,87 l-9,-5 l0,10 Z" fill="#19AD90"></path>
+      <path d="M746,87 L806,87" stroke="#19AD90" stroke-width="2"></path><path d="M806,87 l-9,-5 l0,10 Z" fill="#19AD90"></path>
+      <path d="M980,146 L980,168 L168,168 L168,146" stroke="#19AD90" stroke-width="1.5" fill="none" opacity="0.5"></path>
+      <path d="M168,146 l-5,9 l10,0 Z" fill="#19AD90" opacity="0.5"></path>
+      <text class="s-label" x="574" y="184" text-anchor="middle">the published price makes the model service cheaper to run, which brings more customers</text>
+    </svg>
+    <figcaption>A rival can copy any one of the three. Copying one does not help them win the other two &mdash; and the exchange can only price what already flows through it. The first two products are why Exascale would win the next two years; the third is why it would still be winning in ten.</figcaption>
+  </figure>
+  <p class="plain"><b>The honest caveat</b>
+    This is an argument, not a fact. It rests on the loop actually turning &mdash; and today it has not
+    turned once, because nothing has traded. A moat that exists on a diagram is a hypothesis.</p>
+</div></section>
+
+<!-- ========================================================= 21 Expansion -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">21</span><span class="s">Where it goes next</span><span class="bar"></span></div>
+  <h2>The fourth product is the price itself.</h2>
+  <p class="sub">Once enough trading happens in one place, the price that place publishes becomes the number everyone else writes into their contracts &mdash; whether or not they trade there. That is what Brent means for oil.</p>
+  <div class="tl" style="margin-top:18px">
+    <div class="now"><span class="yr">2026</span><span class="w">Buy it now</span><p>Straight purchase of chip time at today&rsquo;s price.</p></div>
+    <div class="now"><span class="yr">2026</span><span class="w">Buy it for later</span><p>Fix a price and a quantity months ahead, and take delivery then.</p></div>
+    <div class="now"><span class="yr">2026</span><span class="w">Bet on the price</span><p>Take a position on the price without ever touching a chip.</p></div>
+    <div><span class="yr">2027</span><span class="w">The same, for finished AI</span><p>Contracts on the price of AI output rather than chip time.</p></div>
+    <div><span class="yr">2028</span><span class="w">Beyond chips</span><p>The published price becomes the reference other markets use.</p></div>
+  </div>
+  <div class="stats">
+    <div><span class="v jade">173&times;</span><span class="l">Revenue growth, Y1 to Y5<span class="own">OURS</span></span></div>
+    <div><span class="v jade">86%</span><span class="l">Profit margin on it<span class="own">OURS</span></span></div>
+    <div><span class="v">$157B</span><span class="l">What that would be worth at 25&times;<span class="own">OURS</span></span></div>
+    <div><span class="v">5&ndash;10 yr</span><span class="l">To energise one new megawatt<span class="cite">6</span></span></div>
+    <div><span class="v">$0</span><span class="l">Earned from any of it yet</span></div>
+  </div>
+  <p class="plain"><b>Why the founders think this is inevitable</b>
+    Their argument: the shortage cannot be built away before 2030, because power and buildings take
+    years. When you cannot get more of something, you start trading claims on the future of it
+    instead. That is how every forward market in history began.</p>
+</div></section>
+
+<!-- ========================================================= 22 Raise -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">22</span><span class="s">The raise &amp; the return</span><span class="bar"></span></div>
+  <h2>$5 million into a $10 million round.</h2>
+  <div class="figs" style="margin-top:16px;grid-template-columns:1fr 1.25fr;gap:26px">
+    <div>
+      <h3>Where the money goes</h3>
+      <div class="tw" style="margin-top:10px">
+        <table>
+          <thead><tr><th>&nbsp;</th><th class="r">Amount</th></tr></thead>
+          <tbody>
+            <tr><td>Sales &amp; getting traders on board</td><td class="num r">$5.7M</td></tr>
+            <tr><td>Product &amp; engineering</td><td class="num r">$2.4M</td></tr>
+            <tr><td>Licences &amp; legal</td><td class="num r">$1.0M</td></tr>
+            <tr><td>Offices, audit, insurance</td><td class="num r">$0.9M</td></tr>
+            <tr class="accent"><td class="hero">Round total</td><td class="num r hero">$10.0M</td></tr>
+            <tr><td>Already wired</td><td class="num r">$1.72M</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote">$8.28M remains. A $5M cheque would be most of it.<span class="own">OURS</span></p>
+    </div>
+    <div>
+      <h3>What the founders project a $5M cheque returns</h3>
+      <div class="tw" style="margin-top:10px">
+        <table>
+          <thead><tr><th>If it sells in&hellip;</th><th class="r">Low</th><th class="r">Middle</th><th class="r">High</th><th class="r">Your $5M becomes</th></tr></thead>
+          <tbody>
+            <tr><td>Year 3</td><td class="num r">104&times;</td><td class="num r">130&times;</td><td class="num r">156&times;</td><td class="num r">$520M&ndash;$780M</td></tr>
+            <tr><td>Year 4</td><td class="num r">311&times;</td><td class="num r">389&times;</td><td class="num r">467&times;</td><td class="num r">$1.6B&ndash;$2.3B</td></tr>
+            <tr class="accent"><td class="hero">Year 5</td><td class="num r">918&times;</td><td class="num r hero">1,147&times;</td><td class="num r">1,377&times;</td><td class="num r hero">$4.6B&ndash;$6.9B</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote">Assumes $5M buys about 5% today, diluted to roughly 3.6% across three later fundraisings, and that the company sells at 20&ndash;30 times its revenue. All three are assumptions.<span class="own">OURS</span></p>
+    </div>
+  </div>
+  <div class="flag" style="margin-top:14px">
+    <span class="t">Read that grid honestly</span>
+    <p>The arithmetic is sound &mdash; I checked it. But every cell is a projection multiplied by an assumption and divided by another. <strong>All the risk sits in the first number: $6.29 billion of revenue in year five, from a company that has not cleared a single trade.</strong> Note also that the grid contains no losing outcome. The next slide adds it.</p>
+  </div>
+</div></section>
+
+<!-- ========================================================= 23 Vision -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">23</span><span class="s">Vision &amp; what has to be true</span><span class="bar"></span></div>
+  <h2>Computing power becomes an asset class. Someone prints the price.</h2>
+  <div class="ladder" style="margin-top:16px">
+    <div class="rung zero"><span class="m">0&times;</span><span class="nm">The market never gets going</span>
+      <p class="cd">The letters of intent do not convert, or the licences do not arrive, or too few traders show up for a real price to form. <strong>For a venue that has not cleared a trade and does not yet hold its licences, this is the most likely single outcome</strong> &mdash; and it does not appear anywhere in the founders&rsquo; grid.</p></div>
+    <div class="rung"><span class="m">~104&times;</span><span class="nm">A real but early sale</span>
+      <p class="cd">Year three, $712M of revenue, sold at the low end. Needs the signed demand to convert and the exchange to work &mdash; but not to have won the market.</p></div>
+    <div class="rung"><span class="m">~389&times;</span><span class="nm">The established venue</span>
+      <p class="cd">Year four, $2.13B of revenue. Needs Exascale to be where a meaningful share of the world&rsquo;s computing power is priced.</p></div>
+    <div class="rung top"><span class="m">~1,147&times;</span><span class="nm">It becomes the CME of computing</span>
+      <p class="cd">Year five, $6.29B of revenue, worth about $157B &mdash; more than CME and ICE combined today, built over forty years.<span class="cite">9</span> It needs <strong>$711 billion of computing power to cross the book in one year</strong>, 3.7&times; the entire world market for AI chips. The founders&rsquo; answer: financial contracts always trade at a multiple of the goods behind them &mdash; about ten paper barrels per real barrel of oil &mdash; so four per physical dollar is conservative. A fair argument, and the single largest assumption in the case.</p></div>
+  </div>
+  <div class="risks" style="margin-top:14px">
+    <div class="rk"><div class="h"><span class="t">Signed is not banked</span><span class="s s-hi">Most serious</span></div>
+      <p>The $1.34B is non-binding. Ask what share of the 214 accounts has converted, and on what terms.</p></div>
+    <div class="rk"><div class="h"><span class="t">The licences are not in hand</span><span class="s s-hi">Most serious</span></div>
+      <p>$1M of the raise buys them. Until then the venue cannot legally clear at scale, and timetables slip.</p></div>
+    <div class="rk"><div class="h"><span class="t">Nobody trades on an empty market</span><span class="s s-hi">Most serious</span></div>
+      <p>No price without traders, no traders without a price. Most venues in history have failed here.</p></div>
+    <div class="rk"><div class="h"><span class="t">The margin depends on unpaid staff</span><span class="s s-md">Material</span></div>
+      <p>66 of 81 take no salary. Paying them costs ~$16M a year and changes the profit story.</p></div>
+  </div>
+</div></section>
+
+<!-- ========================================================= sources -->
+<section class="slide"><div class="stage">
+  <div class="sec"><span class="n">&mdash;</span><span class="s">Sources</span><span class="bar"></span></div>
+  <h2>Every outside figure, and who said it.</h2>
+  <p class="sub">Anything marked <span class="own">OURS</span> is Exascale&rsquo;s own assertion and cannot be checked from outside &mdash; verify it in the data room. Everything below is someone else you can go and read.</p>
+  <ol class="srcs">
+    <li><span class="n">01</span><div><p class="t">2026 spending guidance &mdash; Microsoft, Amazon, Google, Meta</p><p class="m">Company guidance &middot; 2026 &middot; $725bn committed, up 77% on $410bn. A sum of four separate figures, not one reported number.</p></div></li>
+    <li><span class="n">02</span><div><p class="t">NVIDIA Q4 FY2026 results</p><p class="m">NVIDIA &middot; 2026 &middot; $193.7bn of data-centre revenue, up 68% &mdash; the chips actually delivered.</p></div></li>
+    <li><span class="n">03</span><div><p class="t">Google I/O keynote</p><p class="m">Google &middot; May 2026 &middot; AI requests rose from 480 trillion to 3.2 quadrillion a month in a year.</p></div></li>
+    <li><span class="n">04</span><div><p class="t">North America Data Center Trends</p><p class="m">CBRE &middot; Q1 2026 &middot; Usable capacity grew 36%. Vacancy 1.4%; Northern Virginia 0.3%. 1,951 MW built in the top four markets.</p></div></li>
+    <li><span class="n">05</span><div><p class="t">H100 provider survey</p><p class="m">IntuitionLabs &middot; 2026 &middot; $1.49 to $6.98 per chip-hour across 15+ providers &mdash; 4.7&times; for identical hardware. Quoted rates only.</p></div></li>
+    <li><span class="n">06</span><div><p class="t">Queued Up &mdash; grid interconnection analysis</p><p class="m">Lawrence Berkeley National Laboratory &middot; 2026 &middot; ~2,600 GW waiting in US queues; 5&ndash;10 years to connect.</p></div></li>
+    <li><span class="n">07</span><div><p class="t">Construction workforce analysis</p><p class="m">Information Technology &amp; Innovation Foundation &middot; January 2026 &middot; US trades short ~439,000 workers, ~300,000 electricians.</p></div></li>
+    <li><span class="n">08</span><div><p class="t">H100 one-year rental price index</p><p class="m">SemiAnalysis &middot; 2026 &middot; Contract price rose 38% between October 2025 and March 2026, after a 79% fall.</p></div></li>
+    <li><span class="n">09</span><div><p class="t">Market values &mdash; CME Group and Intercontinental Exchange</p><p class="m">Public market data &middot; 2026 &middot; CME ~$100bn, ICE ~$84bn &mdash; ~$184bn for the two venues that print a price, against ~$31.8bn for every broker that only matches.</p></div></li>
+    <li><span class="n">10</span><div><p class="t">DeepSeek inference economics</p><p class="m">DeepSeek &middot; 1 March 2025 &middot; $87,072 a day of chips produced $562,027 a day of output at list price &mdash; 6.5&times;. DeepSeek notes realised revenue is materially lower.</p></div></li>
+  </ol>
+  <p class="plain" style="margin-top:14px"><b>Status of this document</b>
+    A plain-language edition of Exascale&rsquo;s confidential investor memorandum, prepared for
+    discussion. Not an offer to sell or a solicitation to buy securities, and not investment advice.
+    All projections are the management plan applied to assumptions, are neither booked nor audited,
+    and carry no assurance. An investment of this kind can result in the loss of the entire amount
+    invested. Figures as of August 2026.</p>
+</div></section>
 
 </main>
 
@@ -706,15 +1153,14 @@ figcaption{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px;
 
 <div class="nav">
   <button id="prevBtn" type="button" aria-label="Previous slide">&larr;</button>
-  <span class="count"><b id="cur">01</b> / 14</span>
+  <span class="count"><b id="cur">01</b> / 23</span>
   <button id="nextBtn" type="button" aria-label="Next slide">&rarr;</button>
   <button id="mapBtn" type="button" aria-label="All slides" aria-expanded="false">&#9783;</button>
 </div>
 
 <div id="slideMap" aria-hidden="true" role="dialog" aria-label="All slides">
   <div class="mp-bar">
-    <b>All slides</b>
-    <span class="mp-n"></span>
+    <b>All slides</b><span class="mp-n"></span>
     <span class="mp-keys"><span>Click a slide to jump</span></span>
     <button class="mp-x" type="button" aria-label="Close">&times;</button>
   </div>
@@ -747,6 +1193,13 @@ figcaption{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px;
   window.addEventListener('resize',function(){fit();});
   window.addEventListener('orientationchange',function(){setTimeout(function(){fit(true);},80);});
 
+  /* The last slide is the source register rather than slide 24, so the counter
+     names the deck's own numbering: 01-23, then a dash. Anything else would
+     make this deck disagree with the one it mirrors. */
+  var LABELS=[];
+  for(var i=1;i<=23;i++) LABELS.push(('0'+i).slice(-2));
+  LABELS.push('—');
+
   var idx=0;
   function goto(i){
     idx=Math.max(0,Math.min(slides.length-1,i));
@@ -756,7 +1209,7 @@ figcaption{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px;
     es.forEach(function(e){
       if(e.isIntersecting){
         idx=slides.indexOf(e.target);
-        cur.textContent=('0'+(idx+1)).slice(-2);
+        cur.textContent=LABELS[idx]||String(idx+1);
         fill.style.width=((idx+1)/slides.length*100)+'%';
       }
     });
@@ -767,16 +1220,15 @@ figcaption{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px;
   document.getElementById('prevBtn').onclick=function(){goto(idx-1);};
 
   /* ---------- slide map ----------------------------------------------------
-     Fourteen slides is more than anyone wants to arrow through. The map clones
-     each slide once, on first open, and scales it down — a real preview rather
-     than a title list, so a reader recognises the slide by its shape. */
+     Twenty-four panels is far more than anyone wants to arrow through. The map
+     clones each slide once, on first open, and scales it down — a real preview
+     rather than a title list, so a reader recognises the slide by its shape. */
   var map=document.getElementById('slideMap');
   var mapBtn=document.getElementById('mapBtn');
   var mapGrid=map.querySelector('.mp-grid');
   var thumbs=null;
 
   function isMapOpen(){return map.classList.contains('open');}
-
   function slideName(el,i){
     var s=el.querySelector('.sec .s');
     return (s&&s.textContent.trim())||('Slide '+(i+1));
@@ -787,7 +1239,7 @@ figcaption{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px;
       var name=slideName(sl,i);
       var b=document.createElement('button');
       b.type='button'; b.className='th';
-      b.setAttribute('aria-label','Slide '+(i+1)+' of '+slides.length+', '+name);
+      b.setAttribute('aria-label','Slide '+LABELS[i]+', '+name);
       var frame=document.createElement('span'); frame.className='th-frame';
       var scale=document.createElement('span'); scale.className='th-scale';
       scale.setAttribute('aria-hidden','true');
@@ -795,7 +1247,7 @@ figcaption{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px;
          id still resolves to the original element first. */
       scale.appendChild(sl.cloneNode(true)); frame.appendChild(scale);
       var cap=document.createElement('span'); cap.className='th-cap';
-      var n=document.createElement('b'); n.textContent=('0'+(i+1)).slice(-2);
+      var n=document.createElement('b'); n.textContent=LABELS[i];
       var t=document.createElement('span'); t.textContent=name;
       cap.appendChild(n); cap.appendChild(t);
       b.appendChild(frame); b.appendChild(cap);
@@ -803,7 +1255,7 @@ figcaption{font-size:13px;line-height:1.55;color:var(--muted);margin-top:12px;
       mapGrid.appendChild(b);
       return b;
     });
-    map.querySelector('.mp-n').textContent=slides.length+' slides';
+    map.querySelector('.mp-n').textContent='23 slides + sources';
   }
 
   /* the grid tracks are fluid, so the preview scale is measured, not fixed */
