@@ -26,10 +26,39 @@ at 310,000 iterations. The plaintext is never in `index.html`. Rebuild whenever
 
 ## Design
 
-Pure monochrome: white paper, near-black ink with a faint cool cast, greys
-biased the same way. No accent hue anywhere — hierarchy is carried by weight,
-scale, rule thickness and fill density, which is the discipline that makes an
-institutional page read as institutional. Deliberately single-theme.
+Light and dark, both designed rather than one flipped. Three states: untouched
+the document follows the OS; the toggle in the nav stamps `data-theme`, which
+beats the media query in both directions. Every component reads tokens, so the
+un-stamped default resolves correctly — nothing is styled inside a media block.
+
+Two chart hues on a near-neutral ground, restrained so weight, scale and rule
+thickness still carry most of the hierarchy. Both pairs clear all six colour
+checks (lightness band, chroma floor, CVD separation, normal-vision floor,
+contrast) against their own surface:
+
+| | Blue | Ochre |
+| --- | --- | --- |
+| Light | `#1466A8` | `#B0652B` |
+| Dark | `#3F92D2` | `#C97B47` |
+
+## Charts and KPIs
+
+Seven drawn charts, generated from data arrays rather than hand-authored path
+data: the PwC capex trajectory, H100 price dispersion, capacity with AI share
+shaded, the turnover ladder against the $30–40T band, exchange market caps, the
+take-rate bands on a log scale, and revenue/EBITDA on a log scale. Marks animate
+from a zero baseline when their slide first enters, and only then — an observer
+adds `.in`, so nothing off-screen is running. Every chart paints correct resting
+geometry if the animation never fires, so print, thumbnails and reduced-motion
+all show real marks.
+
+Bars carry a 4px rounded cap at the data end and sit flat on the baseline.
+Stacked segments are separated by a 2px surface gap. Series with two members
+carry both a legend and direct labels, so nothing is identified by colour alone.
+
+Every figure is prefixed with the deck's own unit marker — `($)` `(#)` `(%)`
+`(t)` — carried across from its P&L convention, so a reader knows what kind of
+number they are looking at before they read it.
 
 Type is the deck's own Suisse family, lifted from `deck.html` at build time:
 **Suisse Works** for headlines, **Suisse Intl** for text, **Suisse Intl Mono**
@@ -37,6 +66,10 @@ for every figure. KH Interference is deliberately not carried over — it reads 
 a technology product, and this is a financial document. Note the Suisse faces
 are trial licences whose embedded terms prohibit public use; settle that with
 Swiss Typefaces before this is shown.
+
+Imagery also comes from `deck.html`: the partner marks on the cover, the five
+team faces and provenance marks on slide 11, and the three product consoles on
+slide 04. Marks are inverted under the dark theme so they hold on either ground.
 
 ## The thesis
 
