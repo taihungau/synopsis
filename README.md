@@ -67,9 +67,19 @@ a technology product, and this is a financial document. Note the Suisse faces
 are trial licences whose embedded terms prohibit public use; settle that with
 Swiss Typefaces before this is shown.
 
-Imagery also comes from `deck.html`: the partner marks on the cover, the five
-team faces and provenance marks on slide 11, and the three product consoles on
-slide 04. Marks are inverted under the dark theme so they hold on either ground.
+Imagery also comes from `deck.html`: the cover backdrop, the data-hall band on
+slide 04, the partner marks on the cover, the five team faces and provenance
+marks on slide 11, and the three product consoles on slide 04.
+
+Both photographs are dark-first originals, so the scrim is a theme token rather
+than a fixed overlay. On dark it lifts to ~42% at the open edge and the render
+reads at full strength; on light it sits at ~98% and the same image reads as a
+faint architectural texture instead of a black slab. One asset, two deliberate
+treatments — the alternative was hiding it in one theme.
+
+Partner and provenance marks are drawn as flat silhouettes in the page's own ink
+rather than in brand colour — the treatment the Exascale site already specifies
+for its logo band, and the only one that reads as institutional on both grounds.
 
 ## The thesis
 
