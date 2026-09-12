@@ -41,12 +41,31 @@ contrast) against their own surface:
 | Light | `#1466A8` | `#B0652B` |
 | Dark | `#3F92D2` | `#C97B47` |
 
-## Charts and KPIs
+## One diagram per slide
 
-Seven drawn charts, generated from data arrays rather than hand-authored path
-data: the PwC capex trajectory, H100 price dispersion, capacity with AI share
-shaded, the turnover ladder against the $30–40T band, exchange market caps, the
-take-rate bands on a log scale, and revenue/EBITDA on a log scale. Marks animate
+Twelve of the thirteen slides are a headline, one dominant animated diagram,
+and a caption carrying the single claim the picture makes. Slide 01 is the
+cover, where the backdrop is the visual. Each figure is generated from data
+rather than hand-authored path data, draws into a `<g>` the markup reserves,
+and carries `role="img"` with an `aria-label` stating the same claim.
+
+| | Diagram |
+| --- | --- |
+| 02 | The commodity progression — six steps, oil's completed track, compute's position |
+| 03 | Price dispersion as a strip plot: fifteen real quotes against Brent's cluster |
+| 04 | Market structure — what crosses, in which direction, with every arrow labelled |
+| 05 | Three converging tracks, with the CME listing date as a vertical event |
+| 06 | The bottom-up chain, live: capacity → accelerators → hours → economy → notional |
+| 07 | Venues that publish a benchmark against every broker that only matches |
+| 08 | The flywheel as six arcs, each with its own arrowhead, and a travelling head |
+| 09 | The product stack in dependency order, each layer labelled with what it needs |
+| 10 | Take rate on a log scale with a live marker showing which regime you are in |
+| 11 | Capability coverage across the six a venue needs — five filled, one open |
+| 12 | Notional, revenue and EBITDA on a log scale, with the implied take rate above |
+| 13 | The same progression as 02, walked to the end — the two bookend each other |
+
+Slides 02 and 13 are drawn by one generator with a `done` flag, so the opening
+claim and the closing one cannot drift apart. Marks animate
 from a zero baseline when their slide first enters, and only then — an observer
 adds `.in`, so nothing off-screen is running. Every chart paints correct resting
 geometry if the animation never fires, so print, thumbnails and reduced-motion
